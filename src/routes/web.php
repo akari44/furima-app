@@ -14,8 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
+
+/* 商品一覧トップページ表示 */
+Route::get('/',[ItemController::class, 'index']);
 
 /* 会員登録　ページ表示 */
 Route::get('/register', [AuthController::class, 'register']);
@@ -34,3 +38,6 @@ Route::get('/mypage/profile', [ProfileController::class, 'editProfile']);
 
 /* プロフィール設定のバリデーション、DB保存、ページ移動 */
 Route::post('/mypage/profile', [ProfileController::class, 'updateProfile']);
+
+/* プロフィールページ 表示 */
+Route::get('/mypage', [ProfileController::class, 'showProfile']);

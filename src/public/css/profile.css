@@ -1,0 +1,129 @@
+/*プロフィール部分*/
+.icon-area {
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 200px 50px;
+    align-items: center;
+    width: 1070px;
+}
+
+.icon-wrapper{
+    display: flex;
+    justify-content: left;
+    gap: 50px;
+}
+
+.profile-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 150px;
+    height: 150px;
+    background-color: #d9d9d9;
+    margin-right: 50px;
+}
+
+/* プロフ画像 あとで
+.profile-ifon img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+ */
+
+.username-area{
+    width: 250px;
+    height: 65px;
+    align-items: center;
+}
+
+.username{
+    font-size: 36px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.profile-edit {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ff5555;
+    padding: 10px 20px;
+    border: 2px solid #ff5555;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+/*商品一覧部分*/
+
+.tabs {
+    display: flex;
+    justify-content: left;
+    margin: 80px auto 10px;
+    padding-left: 100px;
+    width: 100%;
+    gap: 80px;
+}
+
+
+.tabs a {
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 700;
+    color: #5f5f5f;
+}
+
+.tabs a:visited {
+    color: #5f5f5f;
+}
+
+.tabs a.active {
+    color: #ff0000;
+}
+
+
+.hr {
+    border: none;
+    border-bottom: #5f5f5f solid 2px;
+    margin: 10px 0 50px;
+}
+
+/* 以下商品一覧部分*/
+.item-wrapper {
+    margin: 50px 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 60px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.item-groups {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 290px;
+    height: 320px;
+    box-sizing: border-box;
+}
+
+.item-img {
+    width: 290px;
+    height: 290px;
+    background-color: #5f5f5f;
+    display: block;
+    object-fit: cover;
+
+
+}
+
+/* あとで追加
+.item-groups img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+*/

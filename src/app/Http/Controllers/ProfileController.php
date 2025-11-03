@@ -18,4 +18,9 @@ class ProfileController extends Controller
         return redirect('profile_edit');
 
     }
+
+    //プロフィールページ 表示
+    public function showProfile(){
+        return view ('profile');
+    }
 }
