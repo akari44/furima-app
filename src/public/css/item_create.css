@@ -1,0 +1,195 @@
+.title{
+    margin: 0 auto 50px;
+    text-align: center;
+}
+.title-text {
+    font-size: 36px;
+    font-weight: 700;
+    color: #000;
+}
+
+.create-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 680px;
+    margin: 0 auto;
+}
+
+h3 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #5f5f5f;
+    margin-bottom: 2px;
+}
+
+label{
+    color: #000;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+hr {
+    border: none;
+    border-top: 2px solid #ccc;
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+.item-image,
+.item-detail{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.item-image__upload-box {
+    width: 100%;
+    height: 150px;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.upload-button {
+    display: inline-block;
+    width: 165px;
+    text-align: center;
+    padding: 8px 0;
+    background-color: #fff;
+    color: #ff5555;
+    border: 2px solid #ff5555;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.category-buttons{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+
+}
+
+.category-btn{
+    color: #ff5655;
+    font-size: 15px;
+    font-weight: 500;
+    border: solid 2px #ff5655;
+    background-color: #fff;
+    border-radius: 100px;
+    padding: 5px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.category-btn.selected {
+    background-color: #ff5565;
+    border-color: #ff5565;
+    color: #fff;
+}
+
+select{
+    width: 100%;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 10px;
+    color: #5f5f5f;
+    border-radius: 6px;
+    border: 1px solid #5f5f5f;
+    margin-bottom: 10px;
+    height: 45px;
+    
+}
+
+
+.item-descriptions{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.item-conditions__title,
+.item-descriptions__title{
+    margin-top: 30px;
+}
+
+.item-descriptions__group{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.item-descriptions__group textarea{
+    width: 100%;
+    height: 125px;
+    border-radius: 6px;
+    border: 1px solid #5f5f5f;
+    margin-bottom: 10px;
+}
+
+.item-descriptions__group input{
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #5f5f5f;
+    margin-bottom: 10px;
+}
+
+.price-input {
+    position: relative;
+    width: 100%;
+}
+
+/* ￥マーク */
+.price-input::before {
+    content: "￥";
+    font-weight: 700;
+    position: absolute;
+    left: 12px;
+    top: 25%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #5f5f5f;
+    pointer-events: none;
+}
+
+/* 入力欄を少し左に */
+.price-input input {
+    padding: 8px 12px 8px 30px;
+
+}
+
+.sell-button{
+    display: block;
+    width: 100%;
+    padding: 12px 0;
+    background-color: #ff5555;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: background-color 0.2s;
+}
+
+/* フォームリクエスト */
+.create__error {
+    font-size: 20px;
+    color: red;
+    margin-bottom: 10px;
+
+}

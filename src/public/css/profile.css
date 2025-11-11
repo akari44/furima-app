@@ -108,6 +108,7 @@
     width: 290px;
     height: 320px;
     box-sizing: border-box;
+    gap: 5px;
 }
 
 .item-img {
@@ -127,3 +128,12 @@
     object-fit: cover;
 }
 */
+
+.item-title {
+    width: 290px;
+    font-size: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}

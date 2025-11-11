@@ -30,8 +30,7 @@
     margin: 10px 0 50px;
 }
 
-/* 以下商品一覧部分*/
-.item-wrapper{
+.item-wrapper {
     margin: 50px 0 auto;
     display: flex;
     flex-wrap: wrap;
@@ -41,16 +40,17 @@
     box-sizing: border-box;
 }
 
-.item-groups{
+.item-groups {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 290px;
     height: 320px;
     box-sizing: border-box;
+    gap: 5px;
 }
 
-.item-img{
+.item-img {
     width: 290px;
     height: 290px;
     background-color: #5f5f5f;
@@ -59,6 +59,7 @@
 
 
 }
+
 /* あとで追加
 .item-groups img{
     width: 100%;
@@ -67,14 +68,11 @@
 }
 */
 
-.item-title{
+.item-title {
     width: 290px;
-    height: 40px;
     font-size: 25px;
-    padding: 5px;
-    text-align: center;
-    overflow:hidden ;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  
+
 }

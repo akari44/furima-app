@@ -21,6 +21,12 @@ use App\Http\Controllers\ProfileController;
 /* 商品一覧トップページ表示 */
 Route::get('/',[ItemController::class, 'index']);
 
+/* 商品出品ページ表示 */
+Route::get('/sell',[ItemController::class, 'createItem']);
+
+/* 商品出品ページのバリデーション、DB保存、ページ移動 */
+Route::post('/sell', [ItemController::class, 'storeItem']);
+
 /* 会員登録　ページ表示 */
 Route::get('/register', [AuthController::class, 'register']);
 
