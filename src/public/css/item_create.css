@@ -92,6 +92,7 @@ hr {
     cursor: pointer;
     transition: all 0.2s;
 }
+/*あとでjsで色を変えるようにする*/
 
 .category-btn.selected {
     background-color: #ff5565;

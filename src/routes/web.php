@@ -27,6 +27,9 @@ Route::get('/sell',[ItemController::class, 'createItem']);
 /* 商品出品ページのバリデーション、DB保存、ページ移動 */
 Route::post('/sell', [ItemController::class, 'storeItem']);
 
+/* 商品詳細ページ表示（まだクエリパラメータなし） */
+Route::get('/item',[ItemController::class, 'showItemDetail']);
+
 /* 会員登録　ページ表示 */
 Route::get('/register', [AuthController::class, 'register']);
 

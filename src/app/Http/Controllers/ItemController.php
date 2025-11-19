@@ -12,6 +12,12 @@ class ItemController extends Controller
         return view('index');
     }
 
+    //商品詳細ページの表示
+    public function showItemDetail(){
+        return view('item_detail');
+    }
+
+
     //商品出品画面の表示
     public function createItem(){
         return view('item_create');

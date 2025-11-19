@@ -47,6 +47,7 @@
                 <button type="button" class="category-btn"  data-value="">おもちゃ</button>
                 <button type="button" class="category-btn" data-value="">ベビー・キッズ</button>
             </div>
+             <!--後でここ色が変わるようにする-->
             <!-- あとでここに選択された値が入る（サーバーに送信される） -->
           <input type="hidden" name="category" id="selected-category"> 
 
@@ -56,7 +57,8 @@
                 @enderror
 
             <label class="item-conditions__title">商品の状態</label>
-            <select name="condition" id="" value="選択してください">
+            <select name="condition" id="" >
+                <option value="" selected disabled>選択してください</option>
                 <option value="good">良好</option>
                 <option value="no_visible_damage">目立った傷や汚れなし</option>
                 <option value="some_damage">やや傷や汚れあり</option>
@@ -74,7 +76,7 @@
             <hr>
             <div class="item-descriptions__group">
                 <label class="item-name__title">商品名</label>
-                <input name="name" type="text" action="" method="post" >
+                <input name="name" type="text" action="/sell" method="post" value="{{ old('name') }}">
                 <!--バリデーション-->
                 @error('name')
                 <div class="create__error">{{$message}}</div>
@@ -83,12 +85,12 @@
 
             <div class="item-descriptions__group">
                 <label class="item-descriptions__title">ブランド名</label>
-                <input name="brand" type="text" action="" method="post" >
+                <input name="brand" type="text" action="/sell" method="post" value="{{ old('brand') }}">
             </div>
 
             <div class="item-descriptions__group">
                 <label class="item-descriptions__title">商品の説明</label>
-                <textarea name="description"></textarea>
+                <textarea name="description" action="/sell" method="post" value="{{ old('description') }}"></textarea>
                 <!--バリデーション-->
                 @error('description')
                 <div class="create__error">{{$message}}</div>
@@ -98,7 +100,7 @@
             <div class="item-descriptions__group">
                 <label class="item-descriptions__title">販売価格</label>
                 <div class="price-input">
-                    <input  type="text" name="price" id="price" action=""  method="post" >
+                    <input  type="text" name="price" id="price" action="/sell"  method="post" value="{{ old('price')}}">
                 </div>
                 <!--バリデーション-->
                 @error('price')
