@@ -17,6 +17,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PurchaseController;
 
 /* 商品一覧トップページ表示 */
 Route::get('/',[ItemController::class, 'index']);
@@ -50,3 +51,11 @@ Route::post('/mypage/profile', [ProfileController::class, 'updateProfile']);
 
 /* プロフィールページ 表示 */
 Route::get('/mypage', [ProfileController::class, 'showProfile']);
+
+/*　商品購入ページ　表示　*/
+Route::get('/purchase', [PurchaseController::class,'showPurchaseForm'])
+    ->name('purchase.show'); ;
+
+/*　商品購入ページ　購入情報DB保存　移動など　*/
+Route::post('/purchase', [PurchaseController::class, 'storePurchase'])
+    ->name('purchase.store');

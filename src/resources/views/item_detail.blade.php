@@ -52,8 +52,7 @@
         </div>
         <h5>商品の情報</h5>
         <div class="detail__item-info">
-            <div class="categories__wrapper
-            ">
+            <div class="categories__wrapper">
                 <p class="info-text">カテゴリー</p>
                 <div class="item-categories">
                         <p class="category-name">洋服</p>

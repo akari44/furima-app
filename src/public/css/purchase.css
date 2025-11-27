@@ -1,0 +1,189 @@
+/*タグのデフォルト余白を削除*/
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+}
+
+.content-wrapper {
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    align-items: flex-start;
+    gap: 100px;
+}
+
+/*左側*/
+
+.wrapper-left {
+    width: 60%;
+    height: auto;
+    margin: 30px auto;
+    min-width: 0;
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+}
+
+hr {
+    border: none;
+    border: #000 solid 1px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.item-wrapper {
+    display: flex;
+    justify-content: left;
+    gap: 30px;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+
+.item__image {
+    width: 30%;
+    max-width: 200px;
+    aspect-ratio: 1/1;
+    background-color: #505050;
+}
+
+.item__image img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.item__info {
+    width: 70%;
+}
+
+.item__info h3 {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.item__info span {
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.payment-wrapper h4,
+.address__title h4 {
+    font-size: 20px;
+    font-weight: 700;
+    padding-left: 30px;
+    margin-bottom: 30px;
+
+}
+
+.payment-method {
+    padding-left: 70px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #5f5f5f;
+    margin-bottom: 30px;
+}
+
+.payment-method select{
+    width: 265px;
+    height: 30px;
+}
+
+::after select{
+    
+}
+
+.address-wrapper{
+    margin-bottom: 30px;
+}
+
+.address__title {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.address__title a {
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.address {
+    font-weight: 600;
+    font-size: 20px;
+    padding-left: 50px;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.postal-code, .address-building{
+    display: block;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: left;
+    padding-left: 30px;
+}
+
+
+
+/*右側*/
+.wrapper-right {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 40%;
+    height: auto;
+    text-align: center;
+    margin: 30px auto;
+}
+
+
+.order-summary{
+    text-align: center;
+    border: #000 solid 1px;
+    width: 90%;
+}
+
+.order-summary tr{
+    height: 115px;
+}
+
+.order-summary th,
+.order-summary td {
+    border: 1px solid #000;
+}
+
+/* 行の右側だけ消す */
+.order-summary__price th:first-child,
+.order-summary__payoment td:first-child {
+    border-right: none;
+}
+
+.order-summary__price th:last-child,
+.order-summary__payoment td:last-child {
+    border-left: none;
+}
+
+
+.purchase-button{
+    width: 90%;
+    height: 60px;
+    border-radius: 5px;
+    margin: 30px 0;
+    background-color: #FF5555;
+    color: #fff;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    padding: 5px 0;
+    border: none;
+}
