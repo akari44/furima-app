@@ -19,6 +19,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
 
+
 /* 商品一覧トップページ表示 */
 Route::get('/',[ItemController::class, 'index']);
 
@@ -59,3 +60,11 @@ Route::get('/purchase', [PurchaseController::class,'showPurchaseForm'])
 /*　商品購入ページ　購入情報DB保存　移動など　*/
 Route::post('/purchase', [PurchaseController::class, 'storePurchase'])
     ->name('purchase.store');
+
+/*　配送先住所の変更ページ　表示*/
+Route::get('/purchase/address', [PurchaseController::class,'createShoppingAddress'])
+    ->name('address.create');
+
+/*　配送先住所の変更ページ　バリデーション、住所の登録*/
+Route::post('/purchase/address', [PurchaseController::class, 'storeShoppingAddress'])
+    ->name('address.store');
