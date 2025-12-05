@@ -25,6 +25,7 @@
                         <img src="{{ asset('images/logo.svg') }}" alt="ロゴ">
                     </div>
                     <!--ログイン認証後のみ表示部分-->
+                    @if (Auth::check())
                     <div class="header-auth__search">
                             <form action="" method="post">
                             @csrf
@@ -45,6 +46,7 @@
                         <a class="header-auth__sell__link" href="">出品</a>
                         </li>
                     </ul>
+                    @endif
                     <!--ここまで-->
 
     

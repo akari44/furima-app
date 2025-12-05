@@ -35,13 +35,11 @@ Route::get('/item',[ItemController::class, 'showItemDetail']);
 /* 会員登録　ページ表示 */
 Route::get('/register', [AuthController::class, 'register']);
 
-/* 会員情報のバリデーション、DB保存、ページ移動 */
+/* 会員登録　バリデーション、DB登録、リダイレクト */
 Route::post('/register', [AuthController::class, 'storeUser']);
 
 /* ログイン　ページ表示 */
 Route::get('/login', [AuthController::class, 'login']);
-
-/* ログインページのバリデーション、DB検索、ページ移動 */
 Route::post('/login', [AuthController::class, 'loginUser']);
 
 /* プロフィール設定 ページ表示 */

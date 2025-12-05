@@ -24,7 +24,7 @@
             
             <div class="register__form">
                 <label for="email">メールアドレス</label>
-                <input type="email" name="email" value="{{ old('email') }}" />
+                <input type="text" name="email" value="{{ old('email') }}" />
 
                 @error('email')
             <div class="form__error">{{ $message }}</div>
@@ -46,7 +46,7 @@
                 <label for="password_confirmation">確認用パスワード</label>
                 <input type="password" name="password_confirmation" />
 
-                @error('password')
+                @error('password_confirmation')
             <div class="form__error">{{ $message }}</div>
             @enderror
             </div>

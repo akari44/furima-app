@@ -8,12 +8,33 @@
 <div class="content">
 
     <div class="tabs">
-        <div class="tabs__recommended">
-            <a href="" class="recommend-items">おすすめ</a>
+     <!--未ログイン--> 
+        @if(!Auth::check())
+        <div class="tabs__recommended">  
+            <a href="{{ url('/') }}" class="tab-title active">おすすめ</a>
         </div>
-        <div class="tabs__favorites">
-            <a href="" class="favorite-items">マイリスト</a>
+        @endif
+
+     <!--ログイン後-->   
+         @if(Auth::check())
+        <div class="tabs__likes"> 
+        <!-- おすすめタブ（/ のとき active） -->
+            @if(request('tab') === 'mylist')
+                <a href="{{ url('/') }}" class="tab-title">おすすめ</a>
+            @else
+        <!-- それ以外（/）→ おすすめがアクティブ -->
+                <a href="{{ url('/') }}" class="tab-title active">おすすめ</a>
+            @endif
+
+
+            <!-- マイリストタブ（/?tab=mylist のとき active） -->
+            @if(request('tab') === 'mylist')
+                <a href="{{ url('/?tab=mylist') }}" class="tab-title active">マイリスト</a>
+            @else
+                <a href="{{ url('/?tab=mylist') }}" class="tab-title">マイリスト</a>
+            @endif
         </div>
+        @endif
     </div>
 
     <hr>
