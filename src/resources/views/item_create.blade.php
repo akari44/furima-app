@@ -16,7 +16,7 @@
             <label for="image" class="item-image__title">商品画像</label>
             <div class="item-image__upload-box">
                 <!--画像選択ボタン-->
-                <label for="images" class="upload-button">画像を選択する</label>
+                <label for="image" class="upload-button">画像を選択する</label>
                 <input type="file" id="image" name="image" accept="image/*" hidden>
 
                 <!--バリデーション-->
@@ -58,11 +58,21 @@
 
             <label class="item-conditions__title">商品の状態</label>
             <select name="condition" id="" >
-                <option value="" selected disabled>選択してください</option>
-                <option value="good">良好</option>
-                <option value="no_visible_damage">目立った傷や汚れなし</option>
-                <option value="some_damage">やや傷や汚れあり</option>
-                <option value="bad">状態が悪い</option>
+                <option value="" disabled {{ old('condition') ? '' : 'selected' }}>選択してください</option>
+
+                <option value="good" {{ old('condition') === 'good' ? 'selected' : '' }}>良好</option>
+
+                <option value="no_visible_damage" {{ old('condition') === 'no_visible_damage' ? 'selected' : '' }}>
+                    目立った傷や汚れなし
+                </option>
+
+                <option value="some_damage" {{ old('condition') === 'some_damage' ? 'selected' : '' }}>
+                    やや傷や汚れあり
+                </option>
+
+                <option value="bad" {{ old('condition') === 'bad' ? 'selected' : '' }}>
+                    状態が悪い
+                </option>
             </select>
             <!--バリデーション-->
                 @error('condition')
@@ -76,21 +86,21 @@
             <hr>
             <div class="item-descriptions__group">
                 <label class="item-name__title">商品名</label>
-                <input name="name" type="text" action="/sell" method="post" value="{{ old('name') }}">
+                <input name="item_name" type="text" value="{{ old('item_name') }}">
                 <!--バリデーション-->
-                @error('name')
+                @error('item_name')
                 <div class="create__error">{{$message}}</div>
                 @enderror
             </div>
 
             <div class="item-descriptions__group">
                 <label class="item-descriptions__title">ブランド名</label>
-                <input name="brand" type="text" action="/sell" method="post" value="{{ old('brand') }}">
+                <input name="brand" type="text" value="{{ old('brand') }}">
             </div>
 
             <div class="item-descriptions__group">
                 <label class="item-descriptions__title">商品の説明</label>
-                <textarea name="description" action="/sell" method="post" value="{{ old('description') }}"></textarea>
+                <textarea name="description">{{ old('description') }}</textarea>
                 <!--バリデーション-->
                 @error('description')
                 <div class="create__error">{{$message}}</div>
@@ -100,7 +110,7 @@
             <div class="item-descriptions__group">
                 <label class="item-descriptions__title">販売価格</label>
                 <div class="price-input">
-                    <input  type="text" name="price" id="price" action="/sell"  method="post" value="{{ old('price')}}">
+                    <input  type="text" name="price" id="price" value="{{ old('price')}}">
                 </div>
                 <!--バリデーション-->
                 @error('price')

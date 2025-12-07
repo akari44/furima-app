@@ -40,10 +40,10 @@
                             </form>
                         </li>
                         <li class="header-auth__mypage">
-                        <a class="header-auth__mypage__link" href="">マイページ</a>
+                        <a class="header-auth__mypage__link" href="/mypage">マイページ</a>
                         </li>
                         <li class="header-auth__sell">
-                        <a class="header-auth__sell__link" href="">出品</a>
+                        <a class="header-auth__sell__link" href="/sell">出品</a>
                         </li>
                     </ul>
                     @endif

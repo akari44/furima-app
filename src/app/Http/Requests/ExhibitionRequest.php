@@ -24,14 +24,25 @@ class ExhibitionRequest extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'required|mimes:jpeg,png',
+            /*'image' => 'required|mimes:jpeg,png',
             'category' => 'required',
+            */
             'condition' => 'required',
-            'name' => 'required',
+            'item_name' => 'required',
             'description' => 'required|max:255',
             'price' => 'required|integer|min:0',
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        if ($this->price) {
+            $this->merge([
+                'price' => str_replace(',', '', $this->price),
+            ]);
+        }
+    }
+
 
     public function messages() 
     {
@@ -40,7 +51,7 @@ class ExhibitionRequest extends FormRequest
             'image.mimes' => '商品画像の拡張子は.jpegか.pngにしてください',
             'category.required' => '商品カテゴリを選択してください',
             'condition.required' => '商品の状態を選択してください',
-            'name.required' => '商品名を入力してください',
+            'item_name.required' => '商品名を入力してください',
             'description.required' => '商品の説明を入力してください',
             'description.max' => '商品の説明は255文字以内で入力してください',
             'price.required' => '商品価格を入力してください',

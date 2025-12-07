@@ -23,11 +23,13 @@ use App\Http\Controllers\PurchaseController;
 /* 商品一覧トップページ表示 */
 Route::get('/',[ItemController::class, 'index']);
 
-/* 商品出品ページ表示 */
-Route::get('/sell',[ItemController::class, 'createItem']);
+Route::middleware('auth')->group(function () {
+    /* 商品出品ページ表示 */
+    Route::get('/sell',[ItemController::class, 'createItem']);
 
-/* 商品出品ページのバリデーション、DB保存、ページ移動 */
-Route::post('/sell', [ItemController::class, 'storeItem']);
+    /* 商品出品ページのバリデーション、DB保存、ページ移動 */
+    Route::post('/sell', [ItemController::class, 'storeItem']);
+});
 
 /* 商品詳細ページ表示（まだクエリパラメータなし） */
 Route::get('/item',[ItemController::class, 'showItemDetail']);
@@ -39,7 +41,7 @@ Route::get('/register', [AuthController::class, 'register']);
 Route::post('/register', [AuthController::class, 'storeUser']);
 
 /* ログイン　ページ表示 */
-Route::get('/login', [AuthController::class, 'login']);
+Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginUser']);
 
 /* プロフィール設定 ページ表示 */

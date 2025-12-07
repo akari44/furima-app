@@ -39,59 +39,17 @@
 
     <hr>
     <!--ここから商品一覧-->
-    <div class="item-wrapper">
-        <!--あとでforeachで回す-->
-        <div class="item-groups">
-
-            <!--あとでdivを　img　に変えて回す-->
-            <div class="item-img">商品画像</div>
-            <p class="item-title">商品名aaaaaaaaaaaaaaaaaaaaaaaaa</p>
+    <div class="wrapper-outer">
+        <div class="item-wrapper">
+            @foreach($items as $item)
+            <div class="item-groups">
+                <!--あとでdivを　img　に変えて回す-->
+                <div class="item-img">商品画像</div>
+                <p class="item-title">{{$item['item_name']}}</p>
+        
+            </div>
+            @endforeach
         </div>
-        <!--以下動作確認のため複数入力あとで消す-->
-        <div class="item-groups">
-
-            <!--あとでdivを　img　に変えて回す-->
-            <div class="item-img">商品画像</div>
-            <p class="item-title">商品名</p>
-        </div>
-        <div class="item-groups">
-
-            <!--あとでdivを　img　に変えて回す-->
-            <div class="item-img">商品画像</div>
-            <p class="item-title">商品名</p>
-        </div>
-        <div class="item-groups">
-
-            <!--あとでdivを　img　に変えて回す-->
-            <div class="item-img">商品画像</div>
-            <p class="item-title">商品名</p>
-        </div>
-        <div class="item-groups">
-
-            <!--あとでdivを　img　に変えて回す-->
-            <div class="item-img">商品画像</div>
-            <p class="item-title">商品名</p>
-        </div>
-        <div class="item-groups">
-
-            <!--あとでdivを　img　に変えて回す-->
-            <div class="item-img">商品画像</div>
-            <p class="item-title">商品名</p>
-        </div>
-        <div class="item-groups">
-
-            <!--あとでdivを　img　に変えて回す-->
-            <div class="item-img">商品画像</div>
-            <p class="item-title">商品名</p>
-        </div>
-        <div class="item-groups">
-
-            <!--あとでdivを　img　に変えて回す-->
-            <div class="item-img">商品画像</div>
-            <p class="item-title">商品名</p>
-        </div>
-
-
     </div>
 
 </div>

@@ -1,6 +1,6 @@
 .tabs{
     display: flex;
-    justify-content: left;
+    justify-content: space-between;
     margin: 80px auto 10px;
     padding-left: 100px;
     width: 100%;
@@ -41,12 +41,20 @@
     margin: 10px 0 50px;
 }
 
+.wrapper-outer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
 .item-wrapper {
     margin: 50px 0 auto;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 60px;
+    max-width: 1400px;
     width: 100%;
     box-sizing: border-box;
 }

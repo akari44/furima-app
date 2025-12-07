@@ -23,7 +23,7 @@
             <p>ブランド名ドルitem->brand</p>
         </div>
         <div class="detail__price">
-            <p class="item-price">￥<span>ドルitem->price</span>（税込）</p>
+            <p class="item-price">￥<span>{{ number_format(どるitem->price) }}</span>（税込）</p>
 
         </div>    
 

@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ExhibitionRequest;
+use App\Models\Item;
 
 class ItemController extends Controller
 {
     //トップページ（商品一覧）の表示
     public function index(){
-        return view('index');
+        $items = Item::latest()->get();
+        return view('index', compact('items'));
     }
 
     //商品詳細ページの表示
@@ -23,11 +25,16 @@ class ItemController extends Controller
         return view('item_create');
     }
 
-     //商品出品画面のバリデーション
+     //商品出品画面  バリデーション　DB保存
     public function storeItem(ExhibitionRequest $request){
-        $form = $request -> all();
-        return redirect('/sell');
+       
+        Item::create([
+        'item_name'   => $request->item_name,
+        'price'       => $request->price,
+        'description' => $request->description,
+        'seller_id'   => auth()->id(),
+        ]);
 
-
+    return redirect('/')->with('message', '商品を登録しました！');
     }
 }
