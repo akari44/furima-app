@@ -26,7 +26,11 @@ class FortifyServiceProvider extends ServiceProvider
         // ログイン回数制限（教材どおり）
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
-            return Limit::perMinute(10)->by($email.$request->ip());
+            return Limit::perMinute(10)->by($email . $request->ip());
         });
+
+        // ⭐ ここには何も追加しなくてOK！！
+        // ログイン後のリダイレクトは FortifyServiceProvider ではなく、
+        // config/fortify.php の 'home' で制御する方式に変更したため。
     }
 }

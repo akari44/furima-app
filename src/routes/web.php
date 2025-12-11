@@ -23,6 +23,7 @@ use App\Http\Controllers\PurchaseController;
 /* 商品一覧トップページ表示 */
 Route::get('/',[ItemController::class, 'index']);
 
+
 Route::middleware('auth')->group(function () {
     /* 商品出品ページ表示 */
     Route::get('/sell',[ItemController::class, 'createItem']);
@@ -45,13 +46,15 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginUser']);
 
 /* プロフィール設定 ページ表示 */
-Route::get('/mypage/profile', [ProfileController::class, 'editProfile']);
+Route::get('/mypage/profile', [ProfileController::class, 'editProfile'])
+-> middleware('auth');
 
 /* プロフィール設定のバリデーション、DB保存、ページ移動 */
 Route::post('/mypage/profile', [ProfileController::class, 'updateProfile']);
 
 /* プロフィールページ 表示 */
-Route::get('/mypage', [ProfileController::class, 'showProfile']);
+Route::get('/mypage', [ProfileController::class, 'showProfile'])
+-> middleware('auth');
 
 /*　商品購入ページ　表示　*/
 Route::get('/purchase', [PurchaseController::class,'showPurchaseForm'])

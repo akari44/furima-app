@@ -15,4 +15,16 @@ class Item extends Model
     {
         return $this->belongsTo(User::class, 'seller_id');
     }
+
+    // アイテムから購入者
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
+    }
+
+    // イメージ画像から商品
+    public function image()
+    {
+        return $this->hasMany(ItemImage::class);
+    }
 }

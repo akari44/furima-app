@@ -10,7 +10,15 @@ class ItemController extends Controller
 {
     //トップページ（商品一覧）の表示
     public function index(){
-        $items = Item::latest()->get();
+
+        $userId = auth()->id(); // ログインしていなければ null
+
+        $items = Item::when($userId, function ($query, $userId) {
+        return $query->where('seller_id', '!=', $userId);
+        })
+        ->latest()
+        ->get();
+
         return view('index', compact('items'));
     }
 
