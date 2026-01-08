@@ -16,6 +16,10 @@
         @yield('css')
     
     </head>
+
+    @yield('scripts')
+
+    
     <body>
         <div class="inner">
             <!--ヘッダー共通部分-->

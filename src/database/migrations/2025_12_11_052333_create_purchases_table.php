@@ -22,10 +22,10 @@ class CreatePurchasesTable extends Migration
             // 購入された商品
             $table->foreignId('item_id')->constrained('items')->onDelete('cascade');
 
-            // 支払い方法（クレカ / コンビニ / 代引き など）
+            // 支払い方法
             $table->foreignId('payment_method_id')->constrained('payment_methods');
 
-            // その時点の配送先（スナップショット保存）
+            // その時点の配送先
             $table->string('postal_code', 255);
             $table->string('address', 255);
             $table->string('building_name', 255)->nullable();

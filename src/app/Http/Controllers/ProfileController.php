@@ -47,7 +47,9 @@ class ProfileController extends Controller
 
         $tab = $request->query('page', 'sell');
 
-        // 出品した商品
+       
+
+ // 出品した商品
         if ($tab === 'sell') {
             $sellItems = Item::where('seller_id', $user->id)
                              ->with('images')

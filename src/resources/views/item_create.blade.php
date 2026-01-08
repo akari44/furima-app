@@ -13,17 +13,18 @@
     @csrf
         <!--商品画像-->
         <div class="item-image">
-            <label for="image" class="item-image__title">商品画像</label>
             <div class="item-image__upload-box">
+                <img id="imagePreview" class="image-preview" alt="" hidden>
                 <!--画像選択ボタン-->
                 <label for="image" class="upload-button">画像を選択する</label>
                 <input type="file" id="image" name="image" accept="image/*" hidden>
-
-                <!--バリデーション-->
-                @error('image')
-                <div class="create__error">{{$message}}</div>
-                @enderror
             </div>
+
+            <!--バリデーション-->
+            @error('image')
+            <div class="create__error">{{$message}}</div>
+            @enderror
+              
         </div>
 
         <!--商品の詳細-->
@@ -33,19 +34,19 @@
             <label class="item-category__title" >カテゴリー</label>
             <div class="category-buttons">
                 <button type="button" class="category-btn"  data-value="ファッション">ファッション</button>
-                <button type="button" class="category-btn"  data-value="">家電</button>
-                <button type="button" class="category-btn"  data-value="">インテリア</button>
-                <button type="button" class="category-btn"  data-value="">レディース</button>
-                <button type="button" class="category-btn"  data-value="">メンズ</button>
-                <button type="button" class="category-btn"  data-value="">コスメ</button>
-                <button type="button" class="category-btn"  data-value="">本</button>
-                <button type="button" class="category-btn"  data-value="">ゲーム</button>
-                <button type="button" class="category-btn"  data-value="">スポーツ</button>
-                <button type="button" class="category-btn"  data-value="">キッチン</button>
-                <button type="button" class="category-btn"  data-value="">ハンドメイド</button>
-                <button type="button" class="category-btn"  data-value="">アクセサリー</button>
-                <button type="button" class="category-btn"  data-value="">おもちゃ</button>
-                <button type="button" class="category-btn" data-value="">ベビー・キッズ</button>
+                <button type="button" class="category-btn"  data-value="家電">家電</button>
+                <button type="button" class="category-btn"  data-value="インテリア">インテリア</button>
+                <button type="button" class="category-btn"  data-value="レディース">レディース</button>
+                <button type="button" class="category-btn"  data-value="メンズ">メンズ</button>
+                <button type="button" class="category-btn"  data-value="コスメ">コスメ</button>
+                <button type="button" class="category-btn"  data-value="本">本</button>
+                <button type="button" class="category-btn"  data-value="ゲーム">ゲーム</button>
+                <button type="button" class="category-btn"  data-value="スポーツ">スポーツ</button>
+                <button type="button" class="category-btn"  data-value="キッチン">キッチン</button>
+                <button type="button" class="category-btn"  data-value="ハンドメイド">ハンドメイド</button>
+                <button type="button" class="category-btn"  data-value="アクセサリー">アクセサリー</button>
+                <button type="button" class="category-btn"  data-value="おもちゃ">おもちゃ</button>
+                <button type="button" class="category-btn" data-value="ベビー・キッズ">ベビー・キッズ</button>
             </div>
              <!--後でここ色が変わるようにする-->
             <!-- あとでここに選択された値が入る（サーバーに送信される） -->
@@ -128,3 +129,55 @@
 
 </div>
 @endsection
+
+    @section('scripts')
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+  // 画像を選んだら、#imagePreview に表示
+  const imageInput = document.getElementById('image');
+  const imagePreview = document.getElementById('imagePreview');
+
+  if (imageInput && imagePreview) {
+    imageInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      imagePreview.src = URL.createObjectURL(file);
+      imagePreview.hidden = false;
+    });
+  }
+
+  
+  // カテゴリ複数選択（色が変わる + hiddenへ保存）
+ 
+  const categoryButtons = document.querySelectorAll('.category-btn');
+  const hiddenCategory = document.getElementById('selected-category');
+
+  let selectedCategories = [];
+
+  categoryButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const value = btn.dataset.value;
+      if (!value) return;
+
+      // すでに選ばれてたら外す
+      if (selectedCategories.includes(value)) {
+        selectedCategories = selectedCategories.filter(v => v !== value);
+        btn.classList.remove('selected');
+      } else {
+        selectedCategories.push(value);
+        btn.classList.add('selected');
+      }
+
+      // hidden に JSON で保存
+      if (hiddenCategory) {
+        hiddenCategory.value = JSON.stringify(selectedCategories);
+      }
+    });
+  });
+
+});
+    </script>
+    @endsection
+
