@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Item;
 
 class User extends Authenticatable
 {
@@ -42,15 +43,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /*Itemsテーブルと１対N*/
-    public function items()
+    /*Itemsテーブルのseller_idと１対N*/
+    public function sellingItems()
     {
-        return $this->hasMany(Item::class);
+        return $this->hasMany(Item::class, 'seller_id');
     }
-    
+        
      /*purchaseテーブルと１対N*/
     public function purchases()
     {
         return $this->hasMany(Purchase::class, 'buyer_id');
     }
+
+
 }

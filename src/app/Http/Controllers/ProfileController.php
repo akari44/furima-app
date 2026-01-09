@@ -51,9 +51,10 @@ class ProfileController extends Controller
 
  // 出品した商品
         if ($tab === 'sell') {
-            $sellItems = Item::where('seller_id', $user->id)
-                             ->with('images')
-                             ->get();
+             $sellItems = $user->Sellingitems()
+                      ->with('images')
+                      ->latest()
+                      ->get();
             $buyItems = collect();
         }
         // 購入した商品

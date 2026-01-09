@@ -26,7 +26,7 @@
             <header class="header">
                 <div class="header__nav">
                     <div class="header__logo">
-                        <img src="{{ asset('images/logo.svg') }}" alt="ロゴ">
+                        <a href="/" class="header-auth__top"><img src="{{ asset('images/logo.svg') }}" alt="ロゴ"></a>
                     </div>
                     <!--ログイン認証後のみ表示部分-->
                     @if (Auth::check())

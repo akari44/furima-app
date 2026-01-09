@@ -107,33 +107,30 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 290px;
+    width: 250px;
     height: 320px;
     box-sizing: border-box;
     gap: 5px;
 }
 
 .item-img {
-    width: 290px;
-    height: 290px;
+    width: 250px;
+    height: 250px;
     background-color: #5f5f5f;
     display: block;
-    object-fit: cover;
-
-
 }
 
 
-.item-groups img{
+.item-img img{
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
 }
 
 
 .item-title {
     width: 290px;
-    font-size: 25px;
+    font-size: 18px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

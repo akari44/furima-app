@@ -22,7 +22,7 @@ class Item extends Model
         return $this->hasMany(Purchase::class);
     }
 
-    // イメージ画像から商品
+    // アイテムからイメージ画像
     public function images()
     {
         return $this->hasMany(ItemImage::class);

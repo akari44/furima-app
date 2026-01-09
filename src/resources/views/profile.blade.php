@@ -55,7 +55,7 @@
                     </div>
 
                     <!-- 商品名 -->
-                    <p class="item-title">{{ $item->name }}</p>
+                    <p class="item-title">{{ $item->item_name }}</p>
 
                 </div>
             @empty
