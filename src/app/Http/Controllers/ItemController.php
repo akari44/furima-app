@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\ExhibitionRequest;
 use App\Models\Item;
+use App\Models\Category;
 use App\Models\ItemImage;
 
 class ItemController extends Controller
@@ -15,18 +16,22 @@ class ItemController extends Controller
 
         $userId = auth()->id(); // ログインしていなければ null
 
-        $items = Item::when($userId, function ($query, $userId) {
+        $tab = request('tab', 'all');
+
+       $items = Item::with('images')-> when($userId, function ($query, $userId) {
         return $query->where('seller_id', '!=', $userId);
         })
         ->latest()
         ->get();
 
-        return view('index', compact('items'));
+        return view('index', compact('items','tab'));
     }
 
     //商品詳細ページの表示
-    public function showItemDetail(){
-        return view('item_detail');
+    public function showItemDetail($item_id){
+        $item = Item::with('categories', 'images')->findOrFail($item_id);
+
+        return view('item_detail', compact('item'));
     }
 
 
@@ -45,7 +50,8 @@ class ItemController extends Controller
             'description' => $request->description,
             'seller_id'   => auth()->id(),
             ]);
-
+            
+            //画像
             if ($request->hasFile('image')) {
                 $path = $request->file('image')->store('item_images', 'public');
 
@@ -54,6 +60,14 @@ class ItemController extends Controller
                     'image_path' => $path,
                 ]);
             }
+
+            //カテゴリ
+            $names = json_decode($request->input('categories', '[]'), true);
+            $names = is_array($names) ? $names : [];
+
+            $categoryIds = Category::whereIn('category_name', $names)->pluck('id')->toArray();
+
+            $item->categories()->sync($categoryIds);
 
         });
 

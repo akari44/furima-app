@@ -15,6 +15,12 @@ class Item extends Model
     {
         return $this->belongsTo(User::class, 'seller_id');
     }
+    // アイテムからカテゴリ
+        public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+    
 
     // アイテムから購入者
     public function purchases()
@@ -27,4 +33,22 @@ class Item extends Model
     {
         return $this->hasMany(ItemImage::class);
     }
+
+    public const CONDITION_LABELS = [
+        'good' => '良好',
+        'no_visible_damage' => '目立った傷や汚れなし',
+        'some_damage' => 'やや傷や汚れあり',
+        'bad' => '状態が悪い',
+    ];
+
+    public function getConditionLabelAttribute()
+    {
+        return self::CONDITION_LABELS[$this->condition] ?? '不明';
+    }
+    // アイテムから支払い情報
+    public function purchase()
+    {
+        return $this->hasOne(Purchase::class);
+    }
 }
+

@@ -30,10 +30,35 @@ Route::middleware('auth')->group(function () {
 
     /* 商品出品ページのバリデーション、DB保存、ページ移動 */
     Route::post('/sell', [ItemController::class, 'storeItem']);
+
+    /* プロフィール設定 ページ表示 */
+    Route::get('/mypage/profile', [ProfileController::class, 'editProfile']);
+
+    /* プロフィール設定のバリデーション、DB保存、ページ移動 */
+    Route::post('/mypage/profile', [ProfileController::class, 'updateProfile']);
+
+    /* プロフィールページ 表示 */
+    Route::get('/mypage', [ProfileController::class, 'showProfile']);
+
+    /*　商品購入ページ　表示　*/
+    Route::get('/purchase/{item_id}', [PurchaseController::class,'showPurchaseForm'])
+        ->name('purchase.show'); 
+
+    /*　商品購入ページ　購入情報DB保存　移動など　*/
+    Route::post('/purchase/{item_id}', [PurchaseController::class, 'storePurchase'])
+        ->name('purchase.store');
+
+    /*　配送先住所の変更ページ　表示*/
+    Route::get('/purchase/address/{item_id}', [PurchaseController::class,'createShoppingAddress'])
+        ->name('address.create');
+
+    /*　配送先住所の変更ページ　バリデーション、住所の登録*/
+    Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'storeShoppingAddress'])
+        ->name('address.store');
 });
 
-/* 商品詳細ページ表示（まだクエリパラメータなし） */
-Route::get('/item',[ItemController::class, 'showItemDetail']);
+/* 商品詳細ページ表示 */
+Route::get('/item/{item_id}',[ItemController::class, 'showItemDetail']);
 
 /* 会員登録　ページ表示 */
 Route::get('/register', [AuthController::class, 'register']);
@@ -45,29 +70,3 @@ Route::post('/register', [AuthController::class, 'storeUser']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginUser']);
 
-/* プロフィール設定 ページ表示 */
-Route::get('/mypage/profile', [ProfileController::class, 'editProfile'])
--> middleware('auth');
-
-/* プロフィール設定のバリデーション、DB保存、ページ移動 */
-Route::post('/mypage/profile', [ProfileController::class, 'updateProfile']);
-
-/* プロフィールページ 表示 */
-Route::get('/mypage', [ProfileController::class, 'showProfile'])
--> middleware('auth');
-
-/*　商品購入ページ　表示　*/
-Route::get('/purchase', [PurchaseController::class,'showPurchaseForm'])
-    ->name('purchase.show'); ;
-
-/*　商品購入ページ　購入情報DB保存　移動など　*/
-Route::post('/purchase', [PurchaseController::class, 'storePurchase'])
-    ->name('purchase.store');
-
-/*　配送先住所の変更ページ　表示*/
-Route::get('/purchase/address', [PurchaseController::class,'createShoppingAddress'])
-    ->name('address.create');
-
-/*　配送先住所の変更ページ　バリデーション、住所の登録*/
-Route::post('/purchase/address', [PurchaseController::class, 'storeShoppingAddress'])
-    ->name('address.store');

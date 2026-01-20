@@ -111,23 +111,22 @@ span{
     width: 100%;
 }
 
-.detail__buy-button{
-    text-decoration: none;
-    color: inherit;
-    font-size: 30px;
-    font-weight: 700;
-    color: #FFF;
-    padding: 20px 0;
+.detail__buy-button {
     width: 100%;
-    background-color: #ff5555;
-    border-radius: 4px;
-    text-align: center;
     margin-bottom: 30px;
 }
 
 .detail__buy-button a {
+    display: block;
+    width: 100%;
     text-decoration: none;
-    color: inherit;
+    font-size: 30px;
+    font-weight: 700;
+    color: #FFF;
+    padding: 20px 0;
+    background-color: #ff5555;
+    border-radius: 4px;
+    text-align: center;
 }
 
 .detail__item-description{

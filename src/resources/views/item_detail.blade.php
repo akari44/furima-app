@@ -9,21 +9,25 @@
 <!--左側（商品画像）-->
     <div class="wrapper-left">
         <div class="item-image">
-            <img src="" alt="">
-            <p>商品画像</p>
+    
+        <img src="{{ $item->images->first()
+    ? asset('storage/' . $item->images->first()->image_path)
+    : asset('images/noimage.png') }}"
+    alt="{{ $item->item_name }}">
         </div>
     </div>
+
 <!--右側（商品詳細）-->
     <div class="wrapper-right">
         <!--購入エリア(クエリパラメータを送る）-->
         <div class="detail__name">
-            <h4>商品名ドルitem->item_name</h4>
+            <h4>{{ $item->item_name }}</h4>
         </div>
         <div class="detail__brand">
-            <p>ブランド名ドルitem->brand</p>
+            <p>{{ $item->brand}}</p>
         </div>
         <div class="detail__price">
-            <p class="item-price">￥<span>{{ number_format(どるitem->price) }}</span>（税込）</p>
+            <p class="item-price">￥<span>{{number_format($item->price) }}</span>（税込）</p>
 
         </div>    
 
@@ -42,27 +46,28 @@
 
 
         <div class="detail__buy-button">
-            <a href="">購入手続きへ</a>
+            <a href="{{ route('purchase.show', ['item_id' => $item->id]) }}">購入手続きへ</a>
         </div>
 
         <!--商品の情報-->
         <h5>商品説明</h5>
         <div class="detail__item-description">
-            <p>カラーとか、新品とかドルitem->description</p>
+            <p>{{ $item->description}}</p>
         </div>
         <h5>商品の情報</h5>
         <div class="detail__item-info">
             <div class="categories__wrapper">
                 <p class="info-text">カテゴリー</p>
                 <div class="item-categories">
-                        <p class="category-name">洋服</p>
-                        <p class="category-name">洋服</p>
-                        <p class="category-name">洋服</p>
+                         @foreach ($item->categories as $category)
+                        <p class="category-name">{{ $category->category_name }}</p>
+                        @endforeach
+                        
                 </div>
             </div>
             <div class="conditions__wrapper">
                 <p class="info-text">商品の状態</p> 
-                <div class="item-condition">良好とかどるitem->condition</div>
+                <div class="item-condition">{{ $item->condition_label}}</div>
             </div>
         </div>
         <!--商品へのコメントフォーム-->
@@ -81,7 +86,7 @@
                 <textarea name="comment"></textarea>
             </div>
             <div class="detail__comment-button">
-                <button>コメントを送信する</button>
+                <button disabled>コメントを送信する</button>
             </div>
         </form>
     </div>

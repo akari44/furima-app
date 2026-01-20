@@ -47,34 +47,29 @@
                 <button type="button" class="category-btn"  data-value="アクセサリー">アクセサリー</button>
                 <button type="button" class="category-btn"  data-value="おもちゃ">おもちゃ</button>
                 <button type="button" class="category-btn" data-value="ベビー・キッズ">ベビー・キッズ</button>
-            </div>
-             <!--後でここ色が変わるようにする-->
-            <!-- あとでここに選択された値が入る（サーバーに送信される） -->
-          <input type="hidden" name="category" id="selected-category"> 
 
+                <input type="hidden" name="categories" id="categories">
+
+            </div>
+            
             <!--バリデーション-->
                 @error('category')
                 <div class="create__error">{{$message}}</div>
                 @enderror
 
             <label class="item-conditions__title">商品の状態</label>
-            <select name="condition" id="" >
-                <option value="" disabled {{ old('condition') ? '' : 'selected' }}>選択してください</option>
-
-                <option value="good" {{ old('condition') === 'good' ? 'selected' : '' }}>良好</option>
-
-                <option value="no_visible_damage" {{ old('condition') === 'no_visible_damage' ? 'selected' : '' }}>
-                    目立った傷や汚れなし
+            <select name="condition">
+                 <option value="" disabled {{ old('condition') ? '' : 'selected' }}>
+                    選択してください
                 </option>
 
-                <option value="some_damage" {{ old('condition') === 'some_damage' ? 'selected' : '' }}>
-                    やや傷や汚れあり
-                </option>
-
-                <option value="bad" {{ old('condition') === 'bad' ? 'selected' : '' }}>
-                    状態が悪い
-                </option>
+                @foreach (\App\Models\Item::CONDITION_LABELS as $value => $label)
+                     <option value="{{ $value }}" {{ old('condition') === $value ? 'selected' : '' }}>
+                        {{ $label }}
+                     </option>
+                @endforeach
             </select>
+            
             <!--バリデーション-->
                 @error('condition')
                 <div class="create__error">{{$message}}</div>
@@ -152,7 +147,7 @@
   // カテゴリ複数選択（色が変わる + hiddenへ保存）
  
   const categoryButtons = document.querySelectorAll('.category-btn');
-  const hiddenCategory = document.getElementById('selected-category');
+  const hiddenCategory = document.getElementById('categories');
 
   let selectedCategories = [];
 
