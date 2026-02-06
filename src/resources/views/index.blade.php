@@ -31,33 +31,19 @@
     </div>
 
     <hr>
-    <!--ここから商品一覧-->
+   <!-- 商品一覧 -->
     <div class="wrapper-outer">
         <div class="item-wrapper">
             @if($tab === 'mylist')
                 <p>マイリスト機能は準備中です。</p>
-            @else
-              
+                @else
                 @forelse($items as $item)
-                <div class="item-groups">
-                   <a href="{{ url('/item/' . $item->id) }}">
-                       <div class="item-img">
-                            <img src="{{ $item->images->first() ? asset('storage/' . $item->images->first()->image_path) : asset('images/noimage.png') }}" alt="{{ $item->item_name }}">
-                        </div>
-                   </a>
-                    
-                   <p class="item-title">{{ $item->item_name }}</p>
-            
-                </div>
+                    <x-item-card :item="$item" />
                 @empty
-                <p>商品はありません。</p>
+                    <p>商品はありません。</p>
                 @endforelse
-
             @endif
-
-        
         </div>
-    </div>
-
+</div>
 </div>
 @endsection

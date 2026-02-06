@@ -8,12 +8,8 @@
 <div class="content-wrapper">
 <!--左側（商品画像）-->
     <div class="wrapper-left">
-        <div class="item-image">
-    
-        <img src="{{ $item->images->first()
-    ? asset('storage/' . $item->images->first()->image_path)
-    : asset('images/noimage.png') }}"
-    alt="{{ $item->item_name }}">
+        <div class="item-image">   
+            <x-item-image :item="$item" />
         </div>
     </div>
 
@@ -21,7 +17,7 @@
     <div class="wrapper-right">
         <!--購入エリア(クエリパラメータを送る）-->
         <div class="detail__name">
-            <h4>{{ $item->item_name }}</h4>
+            <x-item-title :item="$item"/>
         </div>
         <div class="detail__brand">
             <p>{{ $item->brand}}</p>
@@ -46,7 +42,11 @@
 
 
         <div class="detail__buy-button">
+            @if($item->status === 'sold')
+            <a href="/">この商品は売り切れです</a>
+            @else
             <a href="{{ route('purchase.show', ['item_id' => $item->id]) }}">購入手続きへ</a>
+            @endif
         </div>
 
         <!--商品の情報-->

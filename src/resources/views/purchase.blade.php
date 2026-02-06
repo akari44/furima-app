@@ -13,13 +13,10 @@
         <div class="wrapper-left">
             <div class="item-wrapper">
                 <div class="item__image">
-                    <img src="{{ $item->images->first()
-                    ? asset('storage/' . $item->images->first()->image_path)
-                    : asset('images/noimage.png') }}"
-                    alt="{{ $item->item_name }}">
+                    <x-item-image :item="$item" />
                 </div>
                 <div class="item__info">
-                    <h3>{{$item ->item_name}}</h3>
+                    <h3><x-item-title :item="$item" /></h3>
                     <h3><span>￥</span>{{$item ->price}}</h3>
                 </div>
             </div>
@@ -28,17 +25,23 @@
             <div class="payment-wrapper">
                 <h4>支払い方法</h4>
                 <div class="payment-method">
-                    <select name="payment_method_id" id="payment_method_id">
-                       <option value="" disabled selected data-name="">選択してください</option>
+                   <select name="payment_method_id" id="payment_method_id">
+                    <option value="" disabled {{ old('payment_method_id', $purchase->payment_method_id) ? '' : 'selected' }}>
+                        選択してください
+                    </option>
 
-                    @foreach ($paymentMethods as $method)
+                    @foreach($paymentMethods as $method)
                         <option value="{{ $method->id }}"
-                                data-name="{{ $method->display_name }}">
-                            {{ $method->display_name }}
+                        {{ (string)old('payment_method_id', $purchase->payment_method_id) === (string)$method->id ? 'selected' : '' }}>
+                        {{ $method->display_name }}
                         </option>
                     @endforeach
                     </select>
 
+                    @error('payment_method_id')
+                    <div class="form__error">{{ $message }}</div>
+                    @enderror
+                    
                 </div>
             </div>
             <hr>
@@ -49,8 +52,8 @@
                     <a href="{{ route('address.create', ['item_id' => $item->id]) }}">変更する</a>
                 </div>
                 <div class="address">
-                    <p class="postal-code">{{$user -> postal_code}}</p>
-                    <p class="address-building">{{$user -> address}} {{$user -> building_name}}</p>
+                    <p class="postal-code">{{ $purchase->postal_code }}</p>
+                    <p class="address-building">{{ $purchase->address }} {{ $purchase->building_name }}</p>
                 </div>
             </div>
             <hr>
@@ -73,12 +76,13 @@
                 </tr>
 
             </table>
-
-                
-                <button type="submit" class="purchase-button">
-                <a href="/">購入する</a>
+                @if($item->status === 'sold')
+                <button disabled class="purchase-button">売り切れ</button>
+                @else
+               <button type="submit" class="purchase-button">
+                購入する
+                @endif
                 </button>
-            
 
         </div>
     </div>
@@ -86,12 +90,20 @@
 
 <!--支払い方法を即反映させるJS-->
 <script>
-document.getElementById('payment_method_id')
-    .addEventListener('change', function () {
-        const selected = this.options[this.selectedIndex];
-        document.getElementById('selected-payment-method').textContent =
-            selected.dataset.name;
-    });
+document.addEventListener('DOMContentLoaded', () => {
+  const select = document.getElementById('payment_method_id');
+  const display = document.getElementById('selected-payment-method');
+  if (!select || !display) return;
+
+  const reflect = () => {
+    const text = select.options[select.selectedIndex]?.textContent?.trim() ?? '未選択';
+    display.textContent = text;
+  };
+
+  select.addEventListener('change', reflect);
+  reflect();
+});
 </script>
+
 
 @endsection

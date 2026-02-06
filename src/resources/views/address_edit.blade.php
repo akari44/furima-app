@@ -25,7 +25,7 @@
             
             <div class="shopping-address__form">
                 <label for="address">住所</label>
-                <input type="text" name="address" />
+                <input type="text" name="address" value="{{ old('address') }}"/>
 
                 @error('address')
                 <div class="form__error">{{ $message }}</div>
@@ -34,7 +34,7 @@
 
             <div class="shopping-address__form">
                  <label for="building">建物名</label>
-                <input type="text" name="building" />
+                <input type="text" name="building" value="{{ old('building') }}" />
             </div>
 
 

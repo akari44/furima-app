@@ -45,18 +45,7 @@
         <div class="item-wrapper">
             @forelse ($sellItems as $item)
                 <div class="item-groups">
-
-                    <!-- 商品画像（複数のうち1枚目を表示） -->
-                    <div class="item-img">
-                        <img src="{{ $item->images->first() 
-                            ? asset('storage/' . $item->images->first()->image_path) 
-                            : asset('images/noimage.png') }}"
-                            alt="{{ $item->name }}">
-                    </div>
-
-                    <!-- 商品名 -->
-                    <p class="item-title">{{ $item->item_name }}</p>
-
+                     <x-item-card :item="$item" />
                 </div>
             @empty
                 <p>出品した商品はありません。</p>
@@ -68,18 +57,7 @@
         <div class="item-wrapper">
             @forelse ($buyItems as $purchase)
                 <div class="item-groups">
-
-                    <!-- 購入した商品の画像（最初の1枚） -->
-                    <div class="item-img">
-                        <img src="{{ $purchase->item->images->first()
-                            ? asset('storage/' . $purchase->item->images->first()->image_path)
-                            : asset('images/noimage.png') }}"
-                            alt="{{ $purchase->item->name }}">
-                    </div>
-
-                    <!-- 商品名 -->
-                    <p class="item-title">{{ $purchase->item->name }}</p>
-
+                    <x-item-card :item="$purchase->item" />
                 </div>
             @empty
                 <p>購入した商品はありません。</p>

@@ -68,3 +68,49 @@ body {
     padding: 5px;
     text-decoration: none;
 }
+/* withメッセージ　*/
+.flash-message {
+    width: 100%;
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1000;
+}
+
+/* 成功 */
+.flash-message--success {
+    background-color: #dddddd;
+    color: #0000ff;
+    border-bottom: 2px solid #0000ff;
+    border-top: 2px solid #0000ff;
+}
+
+/* SOLD 表示*/
+
+.item-img {
+    position: relative;
+}
+
+.sold-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: red;
+    font-size: 32px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sold-inline {
+    color: red;
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+.sold-overlay {
+    pointer-events: none;
+}

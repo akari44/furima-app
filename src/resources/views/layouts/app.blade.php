@@ -52,15 +52,35 @@
                     </ul>
                     @endif
                     <!--ここまで-->
-
-    
                 </div>
             </header>
+           
+            <!--withメッセージ表示-->
+            @if (session('success'))
+            <div class="flash-message flash-message--success" id="flash-message">
+            {{ session('success') }}
+            </div>
+            @endif
+
+            @if (session('success'))
+            <script>
+                setTimeout(() => {
+                    const flash = document.querySelector('.flash-message');
+                    if (flash) {
+                        flash.style.opacity = '0';
+                        flash.style.transition = 'opacity 0.5s';
+                    }
+                }, 3000);
+            </script>
+            @endif
+            
             <!--各部分メインコンテント-->
             <main>
             @yield('content')
             </main>
         </div>
+
+
 
     </body>
 </html>
