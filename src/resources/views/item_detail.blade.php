@@ -30,10 +30,19 @@
     
         <!--いいねとコメントマーク-->
         <div class="detail__marks-wrapper">
-            <div class="likes">
-                <img src="{{asset ('images/likes.png')}}" alt="イイね">
-                <p>3</p>
-            </div>
+            <div class="likes"
+            id="likeBtn"
+            data-item-id="{{ $item->id }}"
+            style="cursor: pointer;">
+
+            <img
+            src="{{ asset($isLiked ? 'images/likes_active.png' : 'images/likes.png') }}"
+            alt="イイね"
+            id="likeIcon">
+
+            <p id="likeCount">{{ $item->likes_count }}</p>
+        </div>
+
             <div class="comments">
                 <img src="{{asset ('images/comments.png')}}" alt="コメント">
                 <p>1</p>
@@ -91,4 +100,49 @@
         </form>
     </div>
 </div>
+
+<!--いいね用ＪＳ-->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('likeBtn');
+  if (!btn) return;
+
+  btn.addEventListener('click', function () {
+    const itemId = this.dataset.itemId;
+
+    fetch(`/items/${itemId}/like`, {
+      method: 'POST',
+      headers: {
+        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'application/json',
+      },
+      credentials: 'same-origin',
+    })
+    .then(async (res) => {
+      // 失敗したら原因が分かるようにする
+      const text = await res.text();
+      console.log('status:', res.status);
+      console.log('response:', text);
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return JSON.parse(text);
+    })
+    .then(data => {
+      const icon = document.getElementById('likeIcon');
+      if (icon) {
+        icon.src = data.liked
+          ? '{{ asset("images/likes_active.png") }}'
+          : '{{ asset("images/likes.png") }}';
+      }
+
+      const countEl = document.getElementById('likeCount');
+      if (countEl) countEl.textContent = data.count;
+    })
+    .catch(e => console.error('like error:', e));
+  });
+});
+</script>
+tail -n 50 storage/logs/laravel.log
+
 @endsection

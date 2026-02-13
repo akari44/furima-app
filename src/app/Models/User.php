@@ -55,5 +55,12 @@ class User extends Authenticatable
         return $this->hasMany(Purchase::class, 'buyer_id');
     }
 
+    /*likesテーブルとN対N*/
+    public function likedItems()
+    {
+        return $this->belongsToMany(Item::class, 'likes')->withTimestamps();
+    }
+
+
 
 }

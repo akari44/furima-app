@@ -22,12 +22,6 @@ class Item extends Model
     }
     
 
-    // アイテムから購入者
-    public function purchases()
-    {
-        return $this->hasMany(Purchase::class);
-    }
-
     // アイテムからイメージ画像
     public function images()
     {
@@ -50,5 +44,17 @@ class Item extends Model
     {
         return $this->hasOne(Purchase::class);
     }
+    
+    // アイテムからいいねしたユーザー
+    public function likedUsers()
+    {
+        return $this->belongsToMany(User::class, 'likes')->withTimestamps();
+    }
+    // アイテムからいいね情報
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
 }
 

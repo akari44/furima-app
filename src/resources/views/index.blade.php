@@ -34,15 +34,15 @@
    <!-- 商品一覧 -->
     <div class="wrapper-outer">
         <div class="item-wrapper">
-            @if($tab === 'mylist')
-                <p>マイリスト機能は準備中です。</p>
+            @forelse($items as $item)
+                <x-item-card :item="$item" />
+            @empty
+                @if($tab === 'mylist')
+                    <p>いいねした商品はまだありません。</p>
                 @else
-                @forelse($items as $item)
-                    <x-item-card :item="$item" />
-                @empty
                     <p>商品はありません。</p>
-                @endforelse
-            @endif
+                @endif
+            @endforelse
         </div>
 </div>
 </div>

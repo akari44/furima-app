@@ -8,6 +8,7 @@ use App\Http\Requests\ExhibitionRequest;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\ItemImage;
+use App\Models\Like;
 
 class ItemController extends Controller
 {
@@ -18,22 +19,50 @@ class ItemController extends Controller
 
         $tab = request('tab', 'all');
 
-       $items = Item::with('images')-> when($userId, function ($query, $userId) {
-        return $query->where('seller_id', '!=', $userId);
-        })
-        ->latest()
-        ->get();
+       // 未ログイン
+        if (!$userId && $tab === 'mylist') {
+            $items = collect();
+         return view('index', compact('items', 'tab'));
+            }
 
-        return view('index', compact('items','tab'));
+        // マイリストtab
+        if ($tab === 'mylist') {
+            $items = Like::where('user_id', $userId)
+                ->with(['item.images'])
+                ->latest()
+                ->get()
+                ->pluck('item')
+                ->filter(); // null除去
+        } else {
+        // 全商品（自分の出品は除外）
+        $items = Item::with('images')
+            ->when($userId, function ($query, $userId) {
+                return $query->where('seller_id', '!=', $userId);
+            })
+            ->latest()
+            ->get();
+        }
+
+        return view('index', compact('items', 'tab'));
     }
 
     //商品詳細ページの表示
-    public function showItemDetail($item_id){
-        $item = Item::with('categories', 'images')->findOrFail($item_id);
+    public function showItemDetail($item_id)
+    {
+        $item = Item::with('categories', 'images')
+            ->withCount('likes') // ★ likes_count が付く
+            ->findOrFail($item_id);
 
-        return view('item_detail', compact('item'));
+        // ★ 自分がこの商品をいいね済みか
+        $isLiked = auth()->check()
+            ? auth()->user()->likedItems()->where('item_id', $item->id)->exists()
+            : false;
+
+        return view('item_detail', compact('item', 'isLiked'));
     }
 
+
+    
 
     //商品出品画面の表示
     public function createItem(){

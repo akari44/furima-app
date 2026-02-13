@@ -18,6 +18,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\LikeController;
 
 
 /* 商品一覧トップページ表示 */
@@ -70,3 +71,7 @@ Route::post('/register', [AuthController::class, 'storeUser']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginUser']);
 
+/* いいねボタンのトグル */
+Route::post('/items/{item}/like', [LikeController::class, 'toggle'])
+    ->middleware('auth')
+    ->name('items.like');
