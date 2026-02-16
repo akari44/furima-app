@@ -31,9 +31,15 @@
                     <!--ログイン認証後のみ表示部分-->
                     @if (Auth::check())
                     <div class="header-auth__search">
-                            <form action="" method="post">
+                            <form action="{{ url('/') }}" method="get">
                             @csrf
-                            <input class="header-auth__search__window"/>
+                            <input type="hidden" name="tab" value="{{ request('tab', 'all') }}">
+                            <input class="header-auth__search__window" type="text"
+                                name="keyword"
+                                value="{{ request('keyword') }}"
+                                placeholder=" なにをお探しですか？"
+                            />
+
                             </form>
                     </div>
                     <ul class="header-auth">

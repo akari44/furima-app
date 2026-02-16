@@ -13,37 +13,37 @@ use App\Models\Like;
 class ItemController extends Controller
 {
     //トップページ（商品一覧）の表示
-    public function index(){
+    public function index(Request $request){
 
-        $userId = auth()->id(); // ログインしていなければ null
+       $userId  = auth()->id();
+        $tab     = $request->query('tab', 'all');
+        $keyword = $request->query('keyword');
 
-        $tab = request('tab', 'all');
-
-       // 未ログイン
         if (!$userId && $tab === 'mylist') {
             $items = collect();
-         return view('index', compact('items', 'tab'));
-            }
-
-        // マイリストtab
-        if ($tab === 'mylist') {
-            $items = Like::where('user_id', $userId)
-                ->with(['item.images'])
-                ->latest()
-                ->get()
-                ->pluck('item')
-                ->filter(); // null除去
-        } else {
-        // 全商品（自分の出品は除外）
-        $items = Item::with('images')
-            ->when($userId, function ($query, $userId) {
-                return $query->where('seller_id', '!=', $userId);
-            })
-            ->latest()
-            ->get();
+            return view('index', compact('items', 'tab', 'keyword'));
         }
 
-        return view('index', compact('items', 'tab'));
+        if ($tab === 'mylist') {
+            $items = Item::with('images')
+                ->whereHas('likes', function ($q) use ($userId) {
+                    $q->where('user_id', $userId);
+                })
+                ->keyword($keyword)     // あれば検索
+                ->latest()
+                ->get();
+
+        } else {
+            $items = Item::with('images')
+                ->when($userId, function ($q) use ($userId) {
+                    $q->where('seller_id', '!=', $userId);
+                })
+                ->keyword($keyword)
+                ->latest()
+                ->get();
+        }
+
+        return view('index', compact('items', 'tab', 'keyword'));
     }
 
     //商品詳細ページの表示

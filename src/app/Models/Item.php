@@ -56,5 +56,15 @@ class Item extends Model
         return $this->hasMany(Like::class);
     }
 
+    // 検索機能
+    public function scopeKeyword($query, $keyword)
+    {
+        if (!empty($keyword)) {
+            $query->where('item_name', 'like', '%' . $keyword . '%');
+        }
+
+        return $query;
+    }
+
 }
 

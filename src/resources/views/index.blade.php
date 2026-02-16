@@ -18,11 +18,11 @@
      <!--ログイン後-->   
          @if(Auth::check())
         <div class="tabs__likes"> 
-            <a href="{{ url('/') }}"
+            <a href="{{ url('/?tab=all&keyword=' . request('keyword')) }}"
             class="tab-title {{ $tab !== 'mylist' ? 'active' : '' }}">
             おすすめ</a>
 
-            <a href="{{ url('/?tab=mylist') }}"
+            <a href="{{ url('/?tab=mylist&keyword=' . request('keyword')) }}"
             class="tab-title {{ $tab === 'mylist' ? 'active' : '' }}">
             マイリスト</a>
         </div>
@@ -38,7 +38,7 @@
                 <x-item-card :item="$item" />
             @empty
                 @if($tab === 'mylist')
-                    <p>いいねした商品はまだありません。</p>
+                    <p>マイリストに商品はありません。</p>
                 @else
                     <p>商品はありません。</p>
                 @endif

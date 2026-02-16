@@ -11,7 +11,7 @@
 
         <!--左半分-->
         <div class="wrapper-left">
-            <div class="item-wrapper">
+            <div class="item-card">
                 <div class="item__image">
                     <x-item-image :item="$item" />
                 </div>
