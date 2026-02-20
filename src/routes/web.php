@@ -19,6 +19,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\CommentController;
 
 
 /* 商品一覧トップページ表示 */
@@ -56,10 +57,16 @@ Route::middleware('auth')->group(function () {
     /*　配送先住所の変更ページ　バリデーション、住所の登録*/
     Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'storeShoppingAddress'])
         ->name('address.store');
+    
+    /* 商品詳細ページ コメント送信 */
+    Route::post('/item/{item_id}/comments', [CommentController::class, 'storeComments'])
+    ->name('comments.store');
 });
 
 /* 商品詳細ページ表示 */
 Route::get('/item/{item_id}',[ItemController::class, 'showItemDetail']);
+
+
 
 /* 会員登録　ページ表示 */
 Route::get('/register', [AuthController::class, 'register']);

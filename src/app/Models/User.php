@@ -61,6 +61,12 @@ class User extends Authenticatable
         return $this->belongsToMany(Item::class, 'likes')->withTimestamps();
     }
 
+    /*Commentsテーブルと1対N*/
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 
 
 }

@@ -5,6 +5,7 @@ body {
 .inner{
     max-width: 1540px;
     margin: 0 auto;
+    padding-bottom: 80px;
 }
 
 .header__nav {

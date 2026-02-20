@@ -45,7 +45,7 @@
 
             <div class="comments">
                 <img src="{{asset ('images/comments.png')}}" alt="コメント">
-                <p>1</p>
+                <p>{{ $item->comments_count }}</p>
             </div>
         </div> 
 
@@ -80,24 +80,49 @@
             </div>
         </div>
         <!--商品へのコメントフォーム-->
-        <h5>コメント（あとで数字はいるように）</h5>
-        <form action="/comments" method="POST">
+        <h5>コメント（{{ $item->comments_count }}）</h5>
+       
+        <div class="seller-profile">
+            <div class="seller-icon">
+                <img class="seller__icon"
+                src="{{ $item->seller->avatar_path ? asset('storage/' . $item->seller->avatar_path) : asset('images/default.png') }}"
+                alt="seller icon">
+            </div>    
+            <p class="seller-name">{{ $item->seller->name }}</p>
+        </div>
+        <div class="other-comments">
+            @forelse($item->comments as $comment)
+                <div class="comment">
+                    <div class="comment__meta">
+                    <span>{{ $comment->user->name }}</span>
+                    <span>{{ $comment->created_at->format('Y/m/d H:i') }}</span>
+                    </div>
+                    <p>{{ $comment->body }}</p>
+                </div>
+            @empty
+                <p>まだコメントはありません。</p>
+            @endforelse
+
+        </div>
+        <div class="create-comment_title">
+            <p>商品へのコメント</p>
+        </div>    
+        
+        <div class="create-comment">
+            @auth
+            <form action="{{ route('comments.store', $item->id) }}" method="post">
             @csrf
-            <div class="seller-profile">
-                <img class="seller-icon" src="" alt="">
-                <p class="seller-name">出品者の名前</p>
-            </div>
-            <div class="other-comments">
-                <p>ほかにコメントがあればここに入る</p>
-            </div>
-            <div class="create-comment">
-                <label for="">商品へのコメント</label>
-                <textarea name="comment"></textarea>
-            </div>
-            <div class="detail__comment-button">
-                <button disabled>コメントを送信する</button>
-            </div>
-        </form>
+                <textarea name="body" rows="3">{{ old('body') }}</textarea>
+            @error('body') <p class="error">{{ $message }}</p> @enderror
+                <button class="detail__comment-button" type="submit">コメントを送信する</button>
+            </form>
+            @else
+            <p>コメントを送信するにはログインしてください。</p>
+            @endauth
+
+        </div>
+
+        
     </div>
 </div>
 
@@ -143,6 +168,5 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
-tail -n 50 storage/logs/laravel.log
 
 @endsection

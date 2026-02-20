@@ -175,25 +175,34 @@ span{
 
 .seller-profile{
     display: flex;
+    align-items: center;
+    margin-bottom:10px;
+    gap:20px;
 }
 
 .seller-icon{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    overflow: hidden;
     width: 70px;
     height: 70px;
-    background-color: #e5e5e5;
-    margin-right: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: transparent;
+    flex-shrink: 0;
 }
+
+.seller__icon{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 
 .seller-name{
     font-size: 30px;
     font-weight: 700;
     display: block;
     text-align: left;
+    margin: 0;
 }
 
 form{
@@ -210,9 +219,26 @@ form{
     text-align: left;
     text-wrap: inherit;
     padding: 10px;
+    margin-bottom:20px;
 }
 
-.create-comment label{
+.comment{
+    margin-bottom:15px;
+}
+
+.comment__meta{
+    font-size:20px;
+    color: #000000;
+}
+
+.comment__meta span{
+    font-size:22px;
+    font-weight:bold;
+    padding:0px 10px;
+}
+
+
+.create-comment_title{
     font-size: 28px;
     font-weight: 700;
 }
@@ -220,10 +246,11 @@ form{
 textarea{
     width: 100%;
     height: 300px;
+    font-size:20px;
 
 }
 
-.detail__comment-button button{
+.detail__comment-button{
     font-size: 25px;
     font-weight: 700;
     color: #FFF;
@@ -232,5 +259,5 @@ textarea{
     text-align: center;
     border-radius: 4px;
     border: none;
-    margin-bottom: 40px;
+    margin: 20px 0 40px;
 }

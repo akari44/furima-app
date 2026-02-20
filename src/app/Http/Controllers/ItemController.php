@@ -49,11 +49,19 @@ class ItemController extends Controller
     //商品詳細ページの表示
     public function showItemDetail($item_id)
     {
-        $item = Item::with('categories', 'images')
-            ->withCount('likes') // ★ likes_count が付く
-            ->findOrFail($item_id);
+         $item = Item::with([
+            'categories',
+            'images',
+            'seller', 
+            'comments' => function ($q) {
+                $q->latest(); // created_at desc
+            },
+            'comments.user',
+        ])
+        ->withCount('likes')
+        ->withCount('comments') 
+        ->findOrFail($item_id);
 
-        // ★ 自分がこの商品をいいね済みか
         $isLiked = auth()->check()
             ? auth()->user()->likedItems()->where('item_id', $item->id)->exists()
             : false;
