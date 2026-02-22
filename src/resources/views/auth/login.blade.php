@@ -10,7 +10,7 @@
         <h1 class="title__text">ログイン</h1>
     </div>
     <div class="login-wrapper">
-        <form class="login" action="/login" method="post">
+        <form class="login" action="{{ route('login.store') }}" method="post">
             @csrf
             <div class="login__form">
                 <label for="email">メールアドレス</label>
@@ -35,7 +35,7 @@
             <button type="submit" class="login__submit-button">ログインする</button>
         </form>
         <div class="info-login">
-            <a href="/register">会員登録はこちら</a>
+            <a href="{{ route('register') }}">会員登録はこちら</a>
         </div>
     </div>
 </div>

@@ -9,7 +9,7 @@
     <div class="title">
         <h1 class="title__text">商品の出品</h1>
     </div>
-    <form class="create-wrapper" action="/sell" method="POST" enctype="multipart/form-data">
+    <form class="create-wrapper" action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
         <!--商品画像-->
         <div class="item-image">

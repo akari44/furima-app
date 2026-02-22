@@ -52,7 +52,7 @@ class AuthController extends Controller
             // ⭐ 初回ログイン判定：
             // postal_code がまだ null → プロフィール未設定とみなす
             if (is_null($user->postal_code)) {
-                return redirect('/mypage/profile');
+                return redirect()->route('profile.edit');
             }
 
             // ⭐ それ以外（プロフィール設定済み）は、いつものトップ（マイリストタブ）へ

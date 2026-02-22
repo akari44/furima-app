@@ -4,7 +4,7 @@
     @if($item->status === 'sold')
         <x-item-image :item="$item" />
     @else
-        <a href="{{ url('/item/' . $item->id) }}">
+        <a href="{{ route('items.show', ['item_id' => $item->id]) }}">
             <x-item-image :item="$item" />
         </a>
     @endif

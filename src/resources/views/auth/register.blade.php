@@ -10,7 +10,7 @@
         <h1 class="title__text">会員登録</h1>
     </div>
     <div class="register-wrapper">
-        <form class="register" action="/register" method="post">
+        <form class="register" action="{{ route('register.store') }}" method="post">
             @csrf
             <div class="register__form">
                 <label for="name">ユーザー名</label>
@@ -55,7 +55,7 @@
             <button type="submit" class="register__submit-button">登録する</button>
         </form>
         <div class="info-login">
-            <a href="/login">ログインはこちら</a>
+            <a href="{{ route('login') }}">ログインはこちら</a>
         </div>
     </div>
 </div>

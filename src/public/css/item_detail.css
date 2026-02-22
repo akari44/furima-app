@@ -261,3 +261,7 @@ textarea{
     border: none;
     margin: 20px 0 40px;
 }
+
+.error{
+    color: #ff5555;
+}

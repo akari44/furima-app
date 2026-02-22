@@ -10,7 +10,7 @@
         <h1 class="title__text">プロフィール設定</h1>
     </div>
 
-    <form class="edit" action="/mypage/profile" method="post" enctype="multipart/form-data">
+    <form class="edit" action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
      @csrf
 <!-- プロフ画像エリア -->
         <div class="icon-area">

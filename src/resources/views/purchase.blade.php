@@ -49,7 +49,7 @@
             <div class="address-wrapper">
                 <div class="address__title">
                     <h4>配送先</h4>
-                    <a href="{{ route('address.create', ['item_id' => $item->id]) }}">変更する</a>
+                    <a href="{{ route('purchase.address.edit', ['item_id' => $item->id]) }}">変更する</a>
                 </div>
                 <div class="address">
                     <p class="postal-code">{{ $purchase->postal_code }}</p>

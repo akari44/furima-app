@@ -47,7 +47,7 @@ class ItemController extends Controller
     }
 
     //商品詳細ページの表示
-    public function showItemDetail($item_id)
+    public function show($item_id)
     {
          $item = Item::with([
             'categories',
@@ -108,6 +108,6 @@ class ItemController extends Controller
 
         });
 
-        return redirect('/')->with('message', '商品を登録しました！');
+        return redirect()->route('items.index') ->with('message', '商品を登録しました！');
     }
 }

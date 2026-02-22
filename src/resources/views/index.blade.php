@@ -11,7 +11,7 @@
      <!--未ログイン--> 
         @if(!Auth::check())
         <div class="tabs__recommended">  
-            <a href="{{ url('/') }}" class="tab-title active">おすすめ</a>
+            <a href="{{ route('items.index') }}" class="tab-title active">おすすめ</a>
         </div>
         @endif
 

@@ -1,6 +1,6 @@
 <div class="item-img">
     @if($item->status === 'sold')
-        <div class="sold-overlay">SOLD</div>
+        <div class="sold-overlay">Sold</div>
     @endif
 
     <img

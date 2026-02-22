@@ -14,7 +14,7 @@ use App\Models\Purchase;
 class PurchaseController extends Controller
 {
     ///商品購入 ページ表示
-    public function showPurchaseForm($item_id){
+    public function show($item_id){
         $user = Auth::user();
 
         $item= Item::with('images') -> findOrFail($item_id);
@@ -36,14 +36,14 @@ class PurchaseController extends Controller
 
     ///商品購入 支払い情報の仮保存＆確定
 
-    public function storePurchase(PurchaseRequest $request, $item_id)
+    public function store(PurchaseRequest $request, $item_id)
     {
       
         $item = Item::findOrFail($item_id);
 
         // すでに売れてたら止める
         if ($item->status === 'sold') {
-            return redirect('/')
+            return redirect()->route('items.index')
             ->with('error', 'この商品は売り切れです。');
         }
     
@@ -73,13 +73,13 @@ class PurchaseController extends Controller
         $item->status = 'sold';
         $item->save();
 
-        return redirect('/')
+        return redirect()->route('items.index')
             ->with('success', '購入が完了しました。');
     }
 
 
     //配送先住所変更 ページ表示
-    public function createShoppingAddress($item_id){
+    public function editAddress($item_id){
 
         $user = Auth::user();
 
@@ -92,7 +92,7 @@ class PurchaseController extends Controller
     }
 
     //配送先住所変更 バリデーション確認
-    public function storeShoppingAddress(ShoppingAddressRequest $request,$item_id){
+    public function updateAddress(ShoppingAddressRequest $request,$item_id){
        $user = Auth::user();
 
         $purchase = Purchase::where('buyer_id', $user->id)

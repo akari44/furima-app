@@ -26,12 +26,12 @@
     </div>
     <div class="tabs">
 
-        <a href="{{ url('/mypage?page=sell') }}"
+        <a href="{{ route('profile.show', ['page' => 'sell']) }}"
         class="mypage-tab {{ $tab === 'sell' ? 'active' : '' }}">
             出品した商品
         </a>
 
-        <a href="{{ url('/mypage?page=buy') }}"
+        <a href="{{ route('profile.show', ['page' => 'buy']) }}"
         class="mypage-tab {{ $tab === 'buy' ? 'active' : '' }}">
             購入した商品
         </a>
@@ -42,26 +42,30 @@
     <!--ここから商品一覧-->
     <!--出品商品一覧-->
     @if ($tab === 'sell')
-        <div class="item-wrapper">
-            @forelse ($sellItems as $item)
-                <div class="item-groups">
-                     <x-item-card :item="$item" />
-                </div>
-            @empty
-                <p>出品した商品はありません。</p>
-            @endforelse
-        </div>
+        <div class="wrapper-outer">
+            <div class="item-wrapper">
+                @forelse ($sellItems as $item)
+                    <div class="item-groups">
+                        <x-item-card :item="$item" />
+                    </div>
+                @empty
+                    <p>出品した商品はありません。</p>
+                @endforelse
+            </div>
+        </div> 
     @endif
 
     @if ($tab === 'buy')
-        <div class="item-wrapper">
-            @forelse ($buyItems as $purchase)
-                <div class="item-groups">
-                    <x-item-card :item="$purchase->item" />
-                </div>
-            @empty
-                <p>購入した商品はありません。</p>
-            @endforelse
+        <div class="wrapper-outer">
+                <div class="item-wrapper">
+                @forelse ($buyItems as $purchase)
+                    <div class="item-groups">
+                        <x-item-card :item="$purchase->item" />
+                    </div>
+                @empty
+                    <p>購入した商品はありません。</p>
+                @endforelse
+            </div>
         </div>
     @endif
 

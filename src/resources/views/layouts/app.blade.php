@@ -26,12 +26,12 @@
             <header class="header">
                 <div class="header__nav">
                     <div class="header__logo">
-                        <a href="/" class="header-auth__top"><img src="{{ asset('images/logo.svg') }}" alt="ロゴ"></a>
+                        <a href="{{ route('items.index') }}" class="header-auth__top"><img src="{{ asset('images/logo.svg') }}" alt="ロゴ"></a>
                     </div>
                     <!--ログイン認証後のみ表示部分-->
                     @if (Auth::check())
                     <div class="header-auth__search">
-                            <form action="{{ url('/') }}" method="get">
+                            <form action="{{ route('items.index') }}" method="get">
                             @csrf
                             <input type="hidden" name="tab" value="{{ request('tab', 'all') }}">
                             <input class="header-auth__search__window" type="text"
@@ -50,10 +50,10 @@
                             </form>
                         </li>
                         <li class="header-auth__mypage">
-                        <a class="header-auth__mypage__link" href="/mypage">マイページ</a>
+                        <a class="header-auth__mypage__link" href="{{ route('profile.show') }}">マイページ</a>
                         </li>
                         <li class="header-auth__sell">
-                        <a class="header-auth__sell__link" href="/sell">出品</a>
+                        <a class="header-auth__sell__link" href="{{ route('items.create') }}">出品</a>
                         </li>
                     </ul>
                     @endif

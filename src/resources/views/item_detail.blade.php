@@ -52,7 +52,7 @@
 
         <div class="detail__buy-button">
             @if($item->status === 'sold')
-            <a href="/">この商品は売り切れです</a>
+            <a href="{{ route('items.index') }}">この商品は売り切れです</a>
             @else
             <a href="{{ route('purchase.show', ['item_id' => $item->id]) }}">購入手続きへ</a>
             @endif
