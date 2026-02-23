@@ -49,7 +49,7 @@ class User extends Authenticatable
         return $this->hasMany(Item::class, 'seller_id');
     }
         
-     /*purchaseテーブルと１対N*/
+     /*purchaseテーブルのbuyer_idと１対N*/
     public function purchases()
     {
         return $this->hasMany(Purchase::class, 'buyer_id');

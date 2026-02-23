@@ -19,10 +19,10 @@ class CreatePaymentMethodsTable extends Migration
             // 画面に表示する支払い方法名（例：カード支払い）
             $table->string('display_name', 50);
 
-            // アプリ内部で使う識別子（例：credit_card / konbini）
+            // アプリ内部で使う識別子
             $table->string('code', 50)->unique();
 
-            // Stripe の決済方式（例：card / konbini）
+            // Stripe の決済方式
             $table->string('stripe_method', 50)->nullable();
 
             // 利用可能フラグ（true：使える / false：非表示）

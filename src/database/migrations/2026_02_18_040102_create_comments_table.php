@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->text('body');
             $table->timestamps();
-
+            /*コメント表示高速化のため*/
             $table->index(['item_id', 'created_at']);
         });
     }
