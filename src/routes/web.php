@@ -20,6 +20,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 
 /* 商品一覧トップページ表示 */
@@ -46,6 +48,27 @@ Route::get('/item/{item_id}',[ItemController::class, 'show'])
 ->name('items.show');
 
 Route::middleware('auth')->group(function () {
+    
+    // メール認証誘導画面
+    Route::get('/email/verify', function () {
+        return view('auth.verify-email');
+    })->name('verification.notice');
+
+    // メール内リンクを押したとき
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+
+        return redirect('/mypage/profile');
+    })->middleware(['signed'])->name('verification.verify');
+
+    // 認証メール再送
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+
+        return back()->with('message', '認証メールを再送しました。');
+        })->middleware(['throttle:6,1'])->name('verification.send');
+   
+    
     /* 商品詳細ページ コメント送信 */
     Route::post('/item/{item_id}/comments', [CommentController::class, 'storeComments'])
     ->name('comments.store');
@@ -54,9 +77,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/purchase/{item_id}', [PurchaseController::class,'show'])
         ->name('purchase.show'); 
 
-    /*　商品購入ページ　購入情報DB保存　移動など　*/
+    /*　商品購入ページ　購入処理　*/
     Route::post('/purchase/{item_id}', [PurchaseController::class, 'store'])
         ->name('purchase.store');
+
+    /* Stripe成功後　*/
+    Route::get('/purchase/{item_id}/success', [PurchaseController::class, 'success'])
+        ->name('purchase.success');    
 
     /*　配送先住所の変更ページ　表示*/
     Route::get('/purchase/address/{item_id}', [PurchaseController::class,'editAddress'])
@@ -74,20 +101,23 @@ Route::middleware('auth')->group(function () {
     Route::post('/sell', [ItemController::class, 'storeItem'])
     ->name('items.store');
 
-     /* プロフィールページ 表示 */
+    
+});
+
+ /* メール認証済み */
+Route::middleware(['auth', 'verified'])->group(function () {
+    /* プロフィールページ 表示 */
     Route::get('/mypage', [ProfileController::class, 'showProfile'])
         ->name('profile.show');
 
-   /* プロフィール設定 ページ表示 */
+    /* プロフィール設定 ページ表示 */
     Route::get('/mypage/profile', [ProfileController::class, 'editProfile'])
         ->name('profile.edit');
 
     /* プロフィール設定のバリデーション、DB保存 */
     Route::post('/mypage/profile', [ProfileController::class, 'updateProfile'])
         ->name('profile.update');
-    
 });
-
 
 /* いいねボタンのトグル */
 Route::post('/items/{item}/like', [LikeController::class, 'toggle'])

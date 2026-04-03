@@ -3,25 +3,32 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Arr;
+
 
 class UserFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
-    public function definition()
+   
+    protected static ?string $password;
+
+    public function definition(): array
     {
+        $avatarPaths = collect(range(1, 5))
+            ->map(fn($n) => 'avatars/avatar_' . str_pad($n, 2, '0', STR_PAD_LEFT) . '.jpg')
+            ->all();
+
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'password' => static::$password ??= Hash::make('password1234'),
+            'postal_code' => $this->faker->postcode(),
+            'address' => $this->faker->address(),
+            'building_name' => $this->faker->optional()->secondaryAddress(),
+            'avatar_path' => Arr::random($avatarPaths),
         ];
     }
+    
 
     /**
      * Indicate that the model's email address should be unverified.

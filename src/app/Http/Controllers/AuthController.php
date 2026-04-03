@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
@@ -27,12 +28,16 @@ class AuthController extends Controller
         $form['password'] = Hash::make($form['password']);
 
         // 登録
-        User::create($form);
+        $user = User::create($form);
+        // メール認証
+        $user->sendEmailVerificationNotification();
+        Auth::login($user);
+        
 
-        // 登録後はログイン画面へ
-        return redirect('/login');
+        // 登録後はメール認証案内画面へ
+        return redirect()->route('verification.notice');
     }
-
+    
     // ログイン ページ表示
     public function login()
     {
@@ -49,13 +54,17 @@ class AuthController extends Controller
 
             $user = Auth::user();
 
-            // ⭐ 初回ログイン判定：
-            // postal_code がまだ null → プロフィール未設定とみなす
+             // ①メール未認証なら誘導画面へ
+            if (!$user->hasVerifiedEmail()) {
+                return redirect()->route('verification.notice');
+            }
+
+            // ②プロフィール未登録ならプロフ設定画面へ
             if (is_null($user->postal_code)) {
                 return redirect()->route('profile.edit');
             }
 
-            // ⭐ それ以外（プロフィール設定済み）は、いつものトップ（マイリストタブ）へ
+            // ③①と②をクリアした通常user
             return redirect('/?tab=mylist');
         }
 
