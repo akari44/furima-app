@@ -20,7 +20,7 @@ class CreatePurchasesTable extends Migration
             $table->foreignId('buyer_id')->constrained('users')->onDelete('cascade');
 
             // 購入された商品
-            $table->foreignId('item_id')->constrained('items')->onDelete('cascade');
+            $table->foreignId('item_id')->unique()->constrained('items')->onDelete('cascade');
 
             // 支払い方法
            $table->foreignId('payment_method_id')
