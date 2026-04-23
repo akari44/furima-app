@@ -126,8 +126,9 @@
 @endsection
 
     @section('scripts')
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
+   <script>
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('カテゴリJS動いた');
 
   // 画像を選んだら、#imagePreview に表示
   const imageInput = document.getElementById('image');
@@ -143,17 +144,20 @@
     });
   }
 
-  
   // カテゴリ複数選択（色が変わる + hiddenへ保存）
- 
   const categoryButtons = document.querySelectorAll('.category-btn');
   const hiddenCategory = document.getElementById('categories');
+
+  console.log('buttons:', categoryButtons.length);
+  console.log('hidden:', hiddenCategory);
 
   let selectedCategories = [];
 
   categoryButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       const value = btn.dataset.value;
+      console.log('clicked:', value);
+
       if (!value) return;
 
       // すでに選ばれてたら外す
@@ -168,11 +172,11 @@
       // hidden に JSON で保存
       if (hiddenCategory) {
         hiddenCategory.value = JSON.stringify(selectedCategories);
+        console.log('hidden value:', hiddenCategory.value);
       }
     });
   });
-
 });
-    </script>
+</script>
     @endsection
 

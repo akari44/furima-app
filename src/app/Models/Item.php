@@ -12,14 +12,21 @@ class Item extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['seller_id','item_name', 'price', 'description'];
+    protected $fillable = [
+        'seller_id',
+        'item_name', 
+        'price', 
+        'description',
+        'brand',
+        'condition'];
+
     // アイテムから出品者
     public function seller()
     {
         return $this->belongsTo(User::class, 'seller_id');
     }
     // アイテムからカテゴリ
-        public function categories()
+    public function categories()
     {
         return $this->belongsToMany(Category::class);
     }

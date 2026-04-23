@@ -78,17 +78,28 @@ class ItemController extends Controller
     }
 
      //商品出品画面  バリデーション、商品情報DB保存、商品画像のDB保存
-    public function storeItem(ExhibitionRequest $request){
-        DB::transaction(function () use ($request) {
-            
-            $item =Item::create([
-            'item_name'   => $request->item_name,
-            'price'       => $request->price,
-            'description' => $request->description,
-            'seller_id'   => auth()->id(),
+    public function storeItem(ExhibitionRequest $request)
+    {
+        $names = json_decode($request->input('categories', '[]'), true);
+        $names = is_array($names) ? $names : [];
+
+        if (empty($names)) {
+            return back()
+                ->withErrors(['categories' => '商品カテゴリを選択してください'])
+                ->withInput();
+        }
+
+        DB::transaction(function () use ($request, $names) {
+            $item = Item::create([
+                'item_name'   => $request->item_name,
+                'price'       => $request->price,
+                'description' => $request->description,
+                'brand'       => $request->brand,
+                'condition'   => $request->condition,
+                'seller_id'   => auth()->id(),
             ]);
-            
-            //画像
+
+            // 画像
             if ($request->hasFile('image')) {
                 $path = $request->file('image')->store('item_images', 'public');
 
@@ -98,16 +109,11 @@ class ItemController extends Controller
                 ]);
             }
 
-            //カテゴリ
-            $names = json_decode($request->input('categories', '[]'), true);
-            $names = is_array($names) ? $names : [];
-
+            // カテゴリ
             $categoryIds = Category::whereIn('category_name', $names)->pluck('id')->toArray();
-
             $item->categories()->sync($categoryIds);
-
         });
 
-        return redirect()->route('items.index') ->with('message', '商品を登録しました！');
+        return redirect()->route('items.index')->with('message', '商品を登録しました！');
     }
 }

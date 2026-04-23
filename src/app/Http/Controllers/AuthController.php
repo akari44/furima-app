@@ -21,19 +21,14 @@ class AuthController extends Controller
     // 会員登録 登録、バリデーション、リダイレクト
     public function storeUser(RegisterRequest $request)
     {
-        // 必要な項目だけ取得
         $form = $request->only(['name', 'email', 'password']);
-
-        // パスワード暗号化
         $form['password'] = Hash::make($form['password']);
-
-        // 登録
         $user = User::create($form);
+        
         // メール認証
         $user->sendEmailVerificationNotification();
         Auth::login($user);
         
-
         // 登録後はメール認証案内画面へ
         return redirect()->route('verification.notice');
     }
@@ -44,7 +39,7 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    // 🔥 ログイン処理
+    //  ログイン処理
     public function loginUser(LoginRequest $request)
     {
         $credentials = $request->only(['email', 'password']);
@@ -72,5 +67,16 @@ class AuthController extends Controller
         return back()->withErrors([
             'email' => 'ログイン情報が登録されていません',
         ])->withInput();
+    }
+
+    //  ロアウト処理
+    public function logoutUser(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }

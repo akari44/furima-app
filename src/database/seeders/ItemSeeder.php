@@ -9,6 +9,7 @@ use App\Models\Item;
 use App\Models\ItemImage;
 use App\Models\Like;
 use App\Models\Comment;
+use App\Models\Category;
 use Faker\Factory as Faker;
 
 class ItemSeeder extends Seeder
@@ -22,6 +23,7 @@ class ItemSeeder extends Seeder
     {
         $faker = Faker::create();
         $users = User::all();
+        $categories = Category::all();
 
         // 商品50件作成
         $items = Item::factory()
@@ -44,6 +46,10 @@ class ItemSeeder extends Seeder
                 'item_id' => $item->id,
                 'image_path' => Arr::random($imagePaths),
             ]);
+
+             // カテゴリ（1〜3個ランダム）
+            $categoryIds = $categories->random(rand(1, 3))->pluck('id')->toArray();
+            $item->categories()->sync($categoryIds);
 
             // いいね（0〜20）
             $likeCount = rand(0, 20);

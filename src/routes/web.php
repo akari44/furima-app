@@ -43,6 +43,9 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginUser'])
 ->name('login.store');
 
+/* ログアウト */
+Route::post('/logout', [AuthController::class, 'logoutUser'])->name('logout');
+
 /* 商品詳細ページ表示 */
 Route::get('/item/{item_id}',[ItemController::class, 'show'])
 ->name('items.show');
