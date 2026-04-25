@@ -31,7 +31,7 @@ docker-compose.yml の mysql に以下を追加してください。
 mysql:
   platform: linux/x86_64
 ```
-### 4.Laravel 依存関係のインストール
+### 4.Laravel 環境構築
 ```Bash
 docker-compose exec php bash composer install
 ```
@@ -56,7 +56,7 @@ php artisan key:generate
 ```Bash
 php artisan migrate
 
-### 8.シーディングの実行
+### 8.シーディングの実行(サンプルデータ作成)
 ```Bash
 php artisan db:seed
 ```
@@ -66,10 +66,50 @@ php artisan db:seed
 以下にアクセスしてください。
 
 - http://localhost
-### phpMyAdmin
-以下にアクセスしてください。
 
+### phpMyAdmin
 - http://localhost:8080
+
+---
+
+## テストユーザー
+
+以下のユーザーでログイン可能です。
+
+テストユーザー１
+- メールアドレス：akari@gmail.com  
+- パスワード：akariakari  
+
+テストユーザー２
+- メールアドレス：coachtech@gmail.com  
+- パスワード：coachtech
+
+※ 上記はシーディングで作成されています。
+
+------
+## テスト実行
+
+### PHPUnit 実行
+```bash
+php artisan test
+```
+
+### 特定テストのみ実行
+```bash
+php artisan test --filter=ItemTest
+```
+
+---
+## 主な機能
+
+- ユーザー登録 / ログイン
+- 商品一覧表示
+- 商品詳細表示
+- 商品出品
+- 商品購入
+- いいね機能
+- コメント機能
+- 商品検索機能
 
 ---
 ## 使用技術（実行環境）
