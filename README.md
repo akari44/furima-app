@@ -55,6 +55,7 @@ php artisan key:generate
 ### 7.マイグレーションの実行
 ```Bash
 php artisan migrate
+```
 
 ### 8.シーディングの実行(サンプルデータ作成)
 ```Bash
