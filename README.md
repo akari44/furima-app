@@ -10,7 +10,7 @@ Laravelを用いたフリマアプリケーションです。
 
 ### 1. リポジトリのクローン
 ```Bash
-git@github.com:akari44/furima-app.git
+git clone git@github.com:akari44/furima-app.git
 cd furima-app
 ```
 
@@ -21,21 +21,15 @@ Docker Desktop アプリを起動してください。
 ```Bash
 docker-compose up -d --build
 ```
-※※ Mac の M1/M2 チップ環境で 
-```
-no matching manifest for linux/arm64/v8
-```
-が出る場合は、
-docker-compose.yml の mysql に以下を追加してください。
-```YAML
-mysql:
-  platform: linux/x86_64
-```
+
 ### 4.Laravel 環境構築
 ```Bash
-docker-compose exec php bash composer install
+docker-compose exec php bash 
+composer install
 ```
-### 5..env ファイルの作成
+※以降のコマンドはPHPコンテナ内で実行してください
+
+### 5. .env ファイルの作成
 ```Bash
 cp .env.example .env
 ```
@@ -62,7 +56,7 @@ php artisan migrate
 ```Bash
 php artisan db:seed
 ```
-### 10a.ストレージのシンボリックリンク作成（画像表示に必要）
+### 10.ストレージのシンボリックリンク作成（画像表示に必要）
 ```Bash
 php artisan storage:link
 ```
@@ -92,6 +86,43 @@ php artisan storage:link
 
 ※ 上記はシーディングで作成されています。
 
+------
+## テスト環境構築
+### 1.テスト用環境ファイルの作成
+
+```bash
+cp .env .env.testing
+```
+### 2..env.testing のDB設定
+
+```env
+APP_ENV=testing
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=mysql_test
+DB_USERNAME=root
+DB_PASSWORD=root
+```
+### 3.テスト用データベースの作成
+**※テスト実行前に、テスト用データベースの作成を必ず行ってください。**
+```bash
+docker-compose exec mysql mysql -u root -p
+```
+パスワードを入力後、以下を実行します。
+```sql
+CREATE DATABASE mysql_test;
+SHOW DATABASES;
+exit;
+```
+### 4.アプリケーションキーの生成
+```Bash
+php artisan key:generate --env=testing
+```
+### 5.マイグレーションの実行
+```Bash
+php artisan migrate:fresh --env=testing
+```
 ------
 ## テスト実行
 
