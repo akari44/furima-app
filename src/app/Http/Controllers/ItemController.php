@@ -18,12 +18,10 @@ class ItemController extends Controller
        $userId  = auth()->id();
         $tab     = $request->query('tab', 'all');
         $keyword = $request->query('keyword');
-
         if (!$userId && $tab === 'mylist') {
             $items = collect();
             return view('index', compact('items', 'tab', 'keyword'));
         }
-
         if ($tab === 'mylist') {
             $items = Item::with('images')
                 ->whereHas('likes', function ($q) use ($userId) {
@@ -32,7 +30,6 @@ class ItemController extends Controller
                 ->keyword($keyword)     // あれば検索
                 ->latest()
                 ->get();
-
         } else {
             $items = Item::with('images')
                 ->when($userId, function ($q) use ($userId) {
@@ -42,7 +39,6 @@ class ItemController extends Controller
                 ->latest()
                 ->get();
         }
-
         return view('index', compact('items', 'tab', 'keyword'));
     }
 
@@ -65,30 +61,24 @@ class ItemController extends Controller
         $isLiked = auth()->check()
             ? auth()->user()->likedItems()->where('item_id', $item->id)->exists()
             : false;
-
         return view('item_detail', compact('item', 'isLiked'));
     }
-
-
-    
 
     //商品出品画面の表示
     public function createItem(){
         return view('item_create');
     }
 
-     //商品出品画面  バリデーション、商品情報DB保存、商品画像のDB保存
+    //商品情報保存
     public function storeItem(ExhibitionRequest $request)
     {
         $names = json_decode($request->input('categories', '[]'), true);
         $names = is_array($names) ? $names : [];
-
         if (empty($names)) {
             return back()
                 ->withErrors(['categories' => '商品カテゴリを選択してください'])
                 ->withInput();
         }
-
         DB::transaction(function () use ($request, $names) {
             $item = Item::create([
                 'item_name'   => $request->item_name,
@@ -99,17 +89,14 @@ class ItemController extends Controller
                 'seller_id'   => auth()->id(),
             ]);
 
-            // 画像
             if ($request->hasFile('image')) {
                 $path = $request->file('image')->store('item_images', 'public');
-
                 ItemImage::create([
                     'item_id'    => $item->id,
                     'image_path' => $path,
                 ]);
             }
 
-            // カテゴリ
             $categoryIds = Category::whereIn('category_name', $names)->pluck('id')->toArray();
             $item->categories()->sync($categoryIds);
         });

@@ -35,7 +35,6 @@ class LoginRequest extends FormRequest
             'email.required' => 'メールアドレスを入力してください',
             'email.email' => 'メールアドレスはメール形式で入力してください',
             'password.required' => 'パスワードを入力してください',
-            /*パスワードが間違えていた時に、ログイン情報が登録されていません　と入力させる*/
         ];
     }
 }

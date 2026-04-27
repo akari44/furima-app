@@ -12,12 +12,10 @@ class CommentController extends Controller
     public function storeComments(CommentRequest $request, $item_id)
     {
         $item = Item::findOrFail($item_id);
-
         $item->comments()->create([
             'user_id' => auth()->id(),
             'body' => $request->body,
         ]);
-
         return back()->with('message', 'コメントを送信しました！');
     }
 }

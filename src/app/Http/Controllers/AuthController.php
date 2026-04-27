@@ -28,8 +28,6 @@ class AuthController extends Controller
         // メール認証
         $user->sendEmailVerificationNotification();
         Auth::login($user);
-        
-        // 登録後はメール認証案内画面へ
         return redirect()->route('verification.notice');
     }
     
@@ -43,10 +41,8 @@ class AuthController extends Controller
     public function loginUser(LoginRequest $request)
     {
         $credentials = $request->only(['email', 'password']);
-
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
             $user = Auth::user();
 
              // ①メール未認証なら誘導画面へ
@@ -73,10 +69,8 @@ class AuthController extends Controller
     public function logoutUser(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
         return redirect('/login');
     }
 }

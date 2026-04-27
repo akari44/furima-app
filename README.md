@@ -39,27 +39,32 @@ docker-compose exec php bash composer install
 ```Bash
 cp .env.example .env
 ```
-```.env```に以下のDB環境変数をせっていしてください。
+.env ファイルは、Docker環境に合わせた設定がすでに反映されています。
+必要に応じて環境変数を変更してください。
+
+### 6.Stripeの設定（決済機能を使用する場合）
+Stripeを利用する場合は、.env に以下の環境変数を設定してください。
+```env
+STRIPE_KEY=あなたの公開キー
+STRIPE_SECRET=あなたのシークレットキー
 ```
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=laravel_db
-DB_USERNAME=laravel_user
-DB_PASSWORD=laravel_pass
-```
-### 6.アプリケーションキーの生成
+
+### 7.アプリケーションキーの生成
 ```Bash
 php artisan key:generate
 ```
-### 7.マイグレーションの実行
+### 8.マイグレーションの実行
 ```Bash
 php artisan migrate
 ```
 
-### 8.シーディングの実行(サンプルデータ作成)
+### 9.シーディングの実行(サンプルデータ作成)
 ```Bash
 php artisan db:seed
+```
+### 10a.ストレージのシンボリックリンク作成（画像表示に必要）
+```Bash
+php artisan storage:link
 ```
 ---
 ## 動作確認
