@@ -11,8 +11,12 @@
      <!--未ログイン--> 
         @if(!Auth::check())
         <div class="tabs__recommended">  
-            <a href="{{ route('items.index') }}" class="tab-title active">おすすめ</a>
+            <a href="{{ route('items.index') }}"  class="tab-title {{ $tab !== 'mylist' ? 'active' : '' }}">おすすめ</a>
+            <a href="{{ url('/?tab=mylist&keyword=' . request('keyword')) }}"
+            class="tab-title {{ $tab === 'mylist' ? 'active' : '' }}">
+            マイリスト</a>
         </div>
+
         @endif
 
      <!--ログイン後-->   

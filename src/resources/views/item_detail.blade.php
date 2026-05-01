@@ -83,25 +83,25 @@
         <!--商品へのコメントフォーム-->
         <h5>コメント（{{ $item->comments_count }}）</h5>
        
-        <div class="seller-profile">
-            <div class="seller-icon">
-                <img class="seller__icon"
-                src="{{ $item->seller->avatar_path ? asset('storage/' . $item->seller->avatar_path) : asset('images/default.png') }}"
-                alt="seller icon">
-            </div>    
-            <p class="seller-name">{{ $item->seller->name }}</p>
-        </div>
-        <div class="other-comments">
+        <div class="comment-area">
             @forelse($item->comments as $comment)
-                <div class="comment">
-                    <div class="comment__meta">
-                    <span>{{ $comment->user->name }}</span>
-                    <span>{{ $comment->created_at->format('Y/m/d H:i') }}</span>
-                    </div>
-                    <p>{{ $comment->body }}</p>
+            <div class="author">
+                <div class="author-icon">
+                    <img class="author-icon__image"
+                        src="{{ $comment->user->avatar_path ? asset('storage/' . $comment->user->avatar_path) : asset('images/default.png') }}"
+                        alt="author icon">
+                </div>    
+                <p class="author-name">{{ $comment->user->name }}</p>
+            </div>
+
+            <div class="author-body">
+                <div class="comment-meta">
+                <span>{{ $comment->created_at->format('Y/m/d H:i') }}</span>
                 </div>
+                <p>{{ $comment->body }}</p>
+            </div>
             @empty
-                <p>まだコメントはありません。</p>
+            <p>まだコメントはありません。</p>
             @endforelse
 
         </div>
