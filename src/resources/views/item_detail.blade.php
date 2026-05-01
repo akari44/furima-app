@@ -30,19 +30,21 @@
 
     
         <!--いいねとコメントマーク-->
+        <script>
+            const isAuth = @json(Auth::check());
+        </script>
+
         <div class="detail__marks-wrapper">
             <div class="likes"
             id="likeBtn"
             data-item-id="{{ $item->id }}"
             style="cursor: pointer;">
-
-            <img
-            src="{{ asset($isLiked ? 'images/likes_active.png' : 'images/likes.png') }}"
-            alt="イイね"
-            id="likeIcon">
-
-            <p id="likeCount">{{ $item->likes_count }}</p>
-        </div>
+                <img
+                src="{{ asset($isLiked ? 'images/likes_active.png' : 'images/likes.png') }}"
+                alt="イイね"
+                id="likeIcon">
+                <p id="likeCount">{{ $item->likes_count }}</p>
+            </div>
 
             <div class="comments">
                 <img src="{{asset ('images/comments.png')}}" alt="コメント">
@@ -110,17 +112,12 @@
         </div>    
         
         <div class="create-comment">
-            @auth
             <form action="{{ route('comments.store', $item->id) }}" method="post">
             @csrf
                 <textarea name="body" rows="3">{{ old('body') }}</textarea>
             @error('body') <p class="error">{{ $message }}</p> @enderror
                 <button class="detail__comment-button" type="submit">コメントを送信する</button>
             </form>
-            @else
-            <p>コメントを送信するにはログインしてください。</p>
-            @endauth
-
         </div>
 
         
@@ -134,6 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!btn) return;
 
   btn.addEventListener('click', function () {
+
+    if (!isAuth) {
+      window.location.href = '/login';
+      return;
+    }
     const itemId = this.dataset.itemId;
 
     fetch(`/items/${itemId}/like`, {
