@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('building_name', 255)->nullable();
             $table->string('avatar_path', 255)->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->timestamps(); // create_at / update_at
+            $table->timestamps(); // created_at / updated_at
     
         });
     }

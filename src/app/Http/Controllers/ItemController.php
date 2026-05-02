@@ -8,14 +8,13 @@ use App\Http\Requests\ExhibitionRequest;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\ItemImage;
-use App\Models\Like;
 
 class ItemController extends Controller
 {
     //トップページ（商品一覧）の表示
-    public function index(Request $request){
-
-       $userId  = auth()->id();
+    public function index(Request $request)
+    {
+        $userId  = auth()->id();
         $tab     = $request->query('tab', 'all');
         $keyword = $request->query('keyword');
         if (!$userId && $tab === 'mylist') {
@@ -27,7 +26,7 @@ class ItemController extends Controller
                 ->whereHas('likes', function ($q) use ($userId) {
                     $q->where('user_id', $userId);
                 })
-                ->keyword($keyword)     // あれば検索
+                ->keyword($keyword)
                 ->latest()
                 ->get();
         } else {
@@ -45,12 +44,12 @@ class ItemController extends Controller
     //商品詳細ページの表示
     public function show($item_id)
     {
-         $item = Item::with([
+        $item = Item::with([
             'categories',
             'images',
             'seller', 
             'comments' => function ($q) {
-                $q->latest(); // created_at desc
+                $q->latest(); 
             },
             'comments.user',
         ])
@@ -65,7 +64,8 @@ class ItemController extends Controller
     }
 
     //商品出品画面の表示
-    public function createItem(){
+    public function createItem()
+    {
         return view('item_create');
     }
 

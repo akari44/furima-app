@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\ShoppingAddressRequest;
@@ -16,23 +17,27 @@ class PurchaseController extends Controller
     ///商品購入 ページ表示
     public function show($item_id){
         $user = Auth::user();
-        $item= Item::with('images') -> findOrFail($item_id);
+        $item= Item::with('images')->findOrFail($item_id);
         $paymentMethods = PaymentMethod::where('is_active', true)
         ->orderBy('id')
         ->get();
 
          // 未購入のpurchase
-       $purchase = Purchase::firstOrCreate(
-        ['buyer_id' => $user->id, 'item_id' => $item_id, 'purchased_at' => null],
-        [
-            'postal_code' => $user->postal_code,
-            'address' => $user->address,
-            'building_name' => $user->building_name,
-        ]
+        $purchase = Purchase::firstOrCreate(
+            [
+                'buyer_id' => $user->id,
+                'item_id' => $item_id,
+                'purchased_at' => null
+            ],
+            [
+                'postal_code' => $user->postal_code,
+                'address' => $user->address,
+                'building_name' => $user->building_name,
+            ]
         );
         return view ('purchase',compact('user','item','paymentMethods','purchase'));
     }
-    //追加実装stripeCheckout
+    //Stripe Checkoutによる購入処理
     public function store(PurchaseRequest $request, $item_id)
     {
         $item = Item::findOrFail($item_id);
@@ -143,7 +148,8 @@ class PurchaseController extends Controller
     }
 
     //配送先住所変更 ページ表示
-    public function editAddress($item_id){
+    public function editAddress($item_id)
+    {
         $user = Auth::user();
         $purchase = Purchase::where('buyer_id', $user->id)
             ->where('item_id', $item_id)
@@ -153,16 +159,17 @@ class PurchaseController extends Controller
     }
 
     //配送先住所変更 保存
-    public function updateAddress(ShoppingAddressRequest $request,$item_id){
+    public function updateAddress(ShoppingAddressRequest $request,$item_id)
+    {
        $user = Auth::user();
         $purchase = Purchase::where('buyer_id', $user->id)
-        ->where('item_id', $item_id)
-        ->whereNull('purchased_at')
-        ->firstOrFail();
+            ->where('item_id', $item_id)
+            ->whereNull('purchased_at')
+            ->firstOrFail();
         $purchase->update([
-        'postal_code' => $request->postal_code,
-        'address' => $request->address,
-        'building_name' => $request->building,
+            'postal_code' => $request->postal_code,
+            'address' => $request->address,
+            'building_name' => $request->building,
         ]);
         return redirect()->route('purchase.show', ['item_id' => $item_id])
         ->with('success', '配送先を更新しました。');

@@ -40,25 +40,21 @@ class ProfileController extends Controller
         $user = Auth::user();
         $tab = $request->query('page', 'sell');
         if ($tab === 'sell') {
-             $sellItems = $user->Sellingitems()
-                      ->with('images')
-                      ->latest()
-                      ->get();
+            $sellItems = $user->sellingItems()
+                ->with('images')
+                ->latest()
+                ->get();
             $buyItems = collect();
-        }
-        
-        elseif ($tab === 'buy') {
+        }elseif ($tab === 'buy') {
             $buyItems = Purchase::where('buyer_id', $user->id)
-                                ->with('item.images')
-                                ->get();
+                ->with('item.images')
+                ->get();
             $sellItems = collect();
-        }
-       
-        else {
+        }else {
             $tab = 'sell';
             $sellItems = Item::where('seller_id', $user->id)
-                             ->with('images')
-                             ->get();
+                ->with('images')
+                ->get();
             $buyItems = collect();
         }
         return view('profile', compact('user', 'tab', 'sellItems', 'buyItems'));
